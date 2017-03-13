@@ -1,0 +1,51 @@
+;;; arrayprocessing.el reads and fills an array with doubles
+;;;    from the user input
+;;; Receive: doubles from the user to fill the array as well as
+;;;          the size of the array
+;;;
+;;; Created by: Ethan Clark Project6
+;;; Date: 3/30/2016
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun printArray(theArray count)
+  (if (vectorp theArray)
+      (if (< count (length theArray))
+	  (progn
+	   (message "%s" (elt theArray count))
+	   (printArray theArray (+ count 1))))))
+printArray
+
+(defun readArray(theArray count size)
+  (if (vectorp theArray)
+      (if (<= count size)
+	  (progn
+	   (= element (read))
+	   (aset theArray count element)
+	   (readArray theArray (+ count 1) size)))))
+readArray
+
+(defun main(size)
+  (interactive "nEnter the size of the array: ")
+  (readArray [] 0 size)
+  (printArray [] 0))
+main
+
+(main 5)
+
+(readArray [] 0 5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

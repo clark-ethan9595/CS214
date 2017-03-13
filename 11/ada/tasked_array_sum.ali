@@ -1,0 +1,186 @@
+V "GNAT Lib v4.8"
+M P W=b
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_IO
+RV NO_IMPLICIT_DYNAMIC_CODE
+RV NO_IMPLICIT_LOOPS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_TASK_ALLOCATORS
+RV NO_TASK_HIERARCHY
+RV NO_TASKING
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK
+RV MAX_TASK_ENTRIES=2
+RV MAX_TASKS=1+
+
+U tasked_array_sum%b	tasked_array_sum.adb	092f246b NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.integer_aux%s  a-tiinau.adb	a-tiinau.ali
+W ada.text_io.integer_io%s
+W system%s		system.ads		system.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.img_lld%s	s-imglld.adb		s-imglld.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.task_info%s	s-tasinf.adb		s-tasinf.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali
+W system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+W system.val_int%s	s-valint.adb		s-valint.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-comlin.ads		20100623092347 e0accaa5
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-inteio.ads		20070406091342 f64b89a4
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-reatim.ads		20090409150019 63f07669
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-tiinau.ads		20090409150019 8114c8e4
+D a-tiinio.ads		20090409150019 aa04e5d6
+D a-tiinio.adb		20091130162119 df9cd7af
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20110906094621 129923ea
+D i-c.ads		20110801143639 5421119b
+D i-cstrea.ads		20130102105938 3286f6aa
+D system.ads		20140416144310 90249111
+D s-atacco.ads		20120515093410 4c36d12f
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-imgint.ads		20090409150019 02dbe0c2
+D s-imglld.ads		20090409150019 f3220969
+D s-linux.ads		20110906091515 70c7cb45
+D s-multip.ads		20101011073009 38ac9f73
+D s-oscons.ads		20140416144311 70c72966
+D s-osinte.ads		20120309145048 938b6b03
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20110830140625 eea35a36
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stausa.ads		20110804134155 017a0a05
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-tasinf.ads		20120730151500 21316953
+D s-taspri.ads		20110927094500 15f617a8
+D s-taprop.ads		20111212143339 1dd2e1b6
+D s-taskin.ads		20121029113218 59e95256
+D s-taprob.ads		20110927094500 502249e3
+D s-tpoben.ads		20121029113218 b641f948
+D s-tasren.ads		20120208100446 a67a9949
+D s-tassta.ads		20121029110946 70812003
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-valint.ads		20090409150019 48a52a3f
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D tasked_array_sum.adb	20160503004650 4455e4d7
+X 1 ada.ads
+16K9*Ada 19e8 53|10r6 11r6 12r6 13r6 15r6 15r19 15r40 26r28 69r10 73r10 148r15
+. 151r80 153r21
+X 2 a-comlin.ads
+38K13*Command_Line 139e21 53|12w10 69r14 73r14 148r19 151r84
+41V13*Argument_Count{natural} 53|69s27
+48V13*Argument{string} 53|148s32 151s97
+70U14*Set_Exit_Status 53|73s27
+X 5 a-inteio.ads
+18K13*Integer_Text_IO[12|45] 53|11w10 15r23
+X 7 a-reatim.ads
+39K13*Real_Time 139e18 53|13w10 15r44 26r32 153r25
+41O9*Time 53|26r42
+46O9*Time_Span
+53V13*Clock{41O9} 53|149s18 152s17
+58V14*"-"{46O9} 53|153s57
+80V13*To_Duration{duration} 53|153s35
+X 10 a-textio.ads
+49K13*Text_IO 471e16 53|10w10 15r10
+52P9*File_Type(369R9) 53|79r21
+53n23*In_File{53E9} 53|82r21
+92U14*Open 53|81s6
+93p7 File{52P9} 53|81r11
+94e7 Mode{53E9} 53|82r13
+95s7 Name{string} 53|83r13
+166U14*New_Line 53|70s10 72s10 72s20 95s7 98s7 102s7 102s17
+242U14*Put 53|71s10 96s7 99s7 100s7 101s7
+X 12 a-tiinio.ads
+45k21*Integer_IO 84e27 53|19r27
+50U14*Get 53|84s7[5|18] 87s10[19]
+65U14 Put 53|97s7[19]
+X 36 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 53 tasked_array_sum.adb
+17U11*tasked_array_sum 17b11 155l5 155t21
+19K12 Long_IO[12|45] 19r57
+21A9 Int_Array(long_integer)<integer> 22r37 85r16
+22P9 Int_Array_Pointer(21A9) 24r12 35r26 77r56 105r39
+24p4 Values{22P9} 58r32 148m45 148r45 150r29
+25i4 Total{long_integer} 97r11 150m4 154r12
+26o4 Start_Time{7|41O9} 149m4 153r59
+26o16 Stop_Time{7|41O9} 152m4 153r47
+27o4 Time_Required{duration} 153m4 154r19
+29T17 Array_Adder_Task 32e7 49b13 65l8 65t24 110r53
+30Y13 sum 30>17 30>21 53b17 56t13 119s31
+30i17 ID{integer} 54r31
+30i21 Slice_Size{integer} 54r36 55r47
+31Y13 report 31<20 62b17 64t13 135s31
+31i20 Result{long_integer} 63m13 63r13
+35V10 Sum_Slice{long_integer} 35b10 35>20 36>25 36>32 44l8 44t17 58s22 122s17
+35p20 V{22P9} 41r42
+36i25 Start{integer} 40r20
+36i32 Stop{integer} 40r27
+38i7 Partial_Sum{long_integer} 41m13 41r28 43r17
+40i14 i{integer} 41r44
+50i7 My_Total{long_integer} 58m10 63r23
+51i7 My_Start_Index{integer} 54m13 55r30 59r33
+51i23 My_Stop_Index{integer} 55m13 60r33
+53i21 ID{integer}
+53i25 Slice_Size{integer}
+62i24 Result{long_integer}
+67U14 Check_Command_Line 67b14 75l8 75t26 147s4
+77U14 Read_File 77b14 77>24 77=46 89l8 89t17 148s4
+77s24 File_Name{string} 83r21
+77p46 V{22P9} 85m7 86r16 87r27
+78i7 Size{integer} 84m24 85r29
+79p7 Number_File{10|52P9} 81m19 81r19 84r11 87r14
+86i11 i{integer} 87r29
+93U14 Display 93b14 93>22 93>47 103l8 103t15 154s4
+93i22 result{long_integer}
+93o47 Compute_Time{duration} 100r27
+105V12 Sum_In_Parallel{long_integer} 105b12 105>28 106>29 140l8 140t23 150s13
+105p28 Values{22P9} 115r21 122r27 124r20 127r19 128r18 130r32
+106i29 Num_Tasks{integer} 115r37 116r40 118r25 124r38 134r25
+107i7 Partial_Result{long_integer} 135m38 136r29
+107i23 Result{long_integer} 122m7 130m13 130r23 136m10 136r20 139r14
+108i7 Leftovers{integer} 124m7 126r12 127r35
+108i18 Slice_Size{integer} 115m7 119r44 122r38
+108i30 Start{integer} 127m10 129r19
+108i37 Stop{integer} 128m10 129r26
+110A12 Task_Array(29T17)<integer> 111r37 116r26
+111P12 Task_Array_Ptr(110A12) 112r21
+112p7 Adder_Tasks{111P12} 116m7 119r10 135r10
+118i11 task_ID{integer} 119r22 119r35
+129i14 i{integer} 130r39
+134i11 task_ID{integer} 135r22
+

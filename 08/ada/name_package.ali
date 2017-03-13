@@ -1,0 +1,76 @@
+V "GNAT Lib v4.8"
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_SECONDARY_STACK
+RV SPARK
+
+U name_package%b	name_package.adb	bee3c3af NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.concat_5%s	s-conca5.adb		s-conca5.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U name_package%s	name_package.ads	8b3af67d EE NE OO PK
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D name_package.ads	20160408134159 8b3af67d
+D name_package.adb	20160412232410 0db4c006
+D system.ads		20140416144310 90249111
+D s-conca5.ads		20090420091404 1039cea1
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20110830140625 eea35a36
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 12|8r6 8r23
+X 7 a-textio.ads
+49K13*Text_IO 471e16 12|8w10 8r27
+242U14*Put 12|84s5
+X 11 name_package.ads
+8K9*Name_Package 32l5 32e17 12|10b14 87l5 87t17
+10R14*Name 12r32 14r34 16r35 18r33 20r37 22r30 28c22 30e27 12|22r26 36r29
+. 47r30 58r28 69r32 82r24
+12U19*Init 12<24 12>38 12>45 12>53 12|22b13 28l7 28t11
+12r24 Nm{10R14} 12|22b18 25m5 26m5 27m5
+12s38 First{string} 12|23b18 25r19
+12s45 Middle{string} 12|23b25 26r20
+12s53 Last{string} 12|23b33 27r18
+14V18*getFirst{string} 14>27 12|36b12 39l7 39t15
+14r27 Nm{10R14} 12|36b22 38r12
+16V18*getMiddle{string} 16>28 12|47b12 50l7 50t16
+16r28 Nm{10R14} 12|47b23 49r13
+18V18*getLast{string} 18>26 12|58b12 61l7 61t14
+18r26 Nm{10R14} 12|58b21 60r13
+20V18*getFullName{string} 20>30 12|69b12 74l7 74t18 84s10
+20r30 Nm{10R14} 12|69b25 71r12 72r14 73r14
+22U19*Put 22>23 12|82b13 85l7 85t10
+22r23 Nm{10R14} 12|82b17 84r22
+26i17 NAME_SIZE{positive} 29r63
+29a25*myFirst{string} 12|25m8 38r15 71r15
+29a34*myMiddle{string} 12|26m8 49r16 72r17
+29a44*myLast{string} 12|27m8 60r16 73r17
+

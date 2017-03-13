@@ -1,0 +1,64 @@
+V "GNAT Lib v4.8"
+M P W=b
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_SECONDARY_STACK
+RV SPARK
+
+U namer%b		namer.adb		9aa2fda6 NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W name_package%s	name_package.adb	name_package.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D name_package.ads	20160408134159 8b3af67d
+D namer.adb		20160412232556 29f5fe0f
+D system.ads		20140416144310 90249111
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20110830140625 eea35a36
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 12|8r6 9r5
+X 7 a-textio.ads
+49K13*Text_IO 471e16 12|8w10 9r9
+166U14*New_Line 12|26s16 27s30
+242U14*Put 12|27s4
+X 11 name_package.ads
+8K9*Name_Package 32e17 12|8w19 9r18 13r11
+10R14*Name 30e27 12|13r24
+12U19*Init 12|16s4
+14V18*getFirst{string} 12|18s19
+16V18*getMiddle{string} 12|20s19
+18V18*getLast{string} 12|22s19
+20V18*getFullName{string} 12|24s19
+22U19*Put 12|26s4
+X 12 namer.adb
+11U11*namer 11b11 28l5 28t10
+13r3 aName{11|10R14} 16m9 18r28 20r29 22r27 24r31 26r8
+

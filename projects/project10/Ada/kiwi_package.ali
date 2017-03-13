@@ -1,0 +1,82 @@
+V "GNAT Lib v4.8"
+P SS ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK
+
+U kiwi_package%b	kiwi_package.adb	64c9c704 NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U kiwi_package%s	kiwi_package.ads	9f7bb5da EE OO PF PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.ads		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W walkingbird_package%s	walkingbird_package.adb	walkingbird_package.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D bird_package.ads	20160426234548 b167fb80
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D kiwi_package.ads	20160426234917 1322060e
+D kiwi_package.adb	20160426234204 4f8634de
+D system.ads		20140416144310 90249111
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20110830140625 eea35a36
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-string.ads		20130104124955 46b01415
+D s-ststop.ads		20090417130712 ee472be4
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D walkingbird_package.ads  20160426234845 8c59b3d4
+X 1 ada.ads
+16K9*Ada 19e8 14|8r6 9r5
+X 7 a-textio.ads
+49K13*Text_IO 471e16 14|8w10 9r9
+X 10 bird_package.ads
+18U19*Init
+25V18*Name{string}
+X 13 kiwi_package.ads
+11K9*Kiwi_Package 40l5 40e17 14|11b14 34l5 34t17
+13R14*Kiwi_Type<35|12R14> 10|18p19 25p18 13|20P18 20r35 28P18 28r40 34c14
+. 37e19 14|18r35 29r40 35|19P18
+20V18*Call{string}<10|32p18> 20>23 14|18b18 21l13 21t17
+20r23 A_Kiwi{13R14} 14|18b23
+28V18*Type_Name{string}<10|39p18> 28>28 14|29b18 32l13 32t22
+28r28 A_Kiwi{13R14} 14|29b28
+X 35 walkingbird_package.ads
+10K9*WalkingBird_Package 13|9w6 9r31 35|30e24
+12R14*WalkingBird_Type<10|10R14> 13|13r31 34r31 35|28e19
+19V18*movement{string}<10|53p18>
+

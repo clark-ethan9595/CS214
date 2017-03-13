@@ -1,0 +1,77 @@
+V "GNAT Lib v4.8"
+M P W=b
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV SPARK
+
+U temperature%b		temperature.adb		03ae5d31 NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W temp_package%s	temp_package.adb	temp_package.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-flteio.ads		20070406091342 e18a47a0
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-tiflio.ads		20090409150019 56fbda09
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D system.ads		20140416144310 90249111
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D temp_package.ads	20160414230815 f8f5da25
+D temperature.adb	20160414230842 22bc3560
+X 1 ada.ads
+16K9*Ada 19e8 31|7r6 7r19 8r5 8r18
+X 4 a-flteio.ads
+20K13*Float_Text_IO[9|45] 31|7w23 8r22
+X 8 a-textio.ads
+49K13*Text_IO 471e16 31|7w10 8r9
+166U14*New_Line 31|48s17
+242U14*Put 31|19s9 23s9 27s9 38s17 43s17
+X 9 a-tiflio.ads
+56U14*Get 31|28s9[4|20]
+X 30 temp_package.ads
+7K9*temp_package 48e17 31|7w38 8r37 13r32
+10R14*Temperature 46e27 31|13r45
+17V18*getScale{character} 31|30s23
+19U19*setFahrenheit 31|36s17 52s25
+21U19*setCelsius 31|41s17 56s25
+23U19*setKelvin 31|46s17 54s25
+25U19*raise_temp 31|60s17
+29V18*equals{boolean} 31|33s52
+31V18*less_than{boolean} 31|33s17
+33U19*readTemp 31|20s9 24s9
+35U19*writeTemp 31|37s17 42s17 47s17
+X 31 temperature.adb
+10U11*temperature 10b11 64l5 64t16
+13r9 start_Temp{30|10R14} 20m18 30r32 33r27 33r59 36m31 37r27 41m28 42r27
+. 46m27 47r27 52m39 54m35 56m36 60m28
+13r21 end_temp{30|10R14} 24m18 33r39 33r71
+14f9 increment_val{float} 28m13 60r40
+15e9 temp_scale{character} 30m9 51r22 51r42 53r25 53r45 55r25 55r45
+

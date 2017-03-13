@@ -1,0 +1,19 @@
+(lambda (x) (+ x x) )
+(lambda (x) (+ x x))
+
+((lambda (x) (+ x x)) 17)
+34
+
+(lambda (x y z a) (max (abs x) (abs y) (abs z) (abs a)))
+(lambda (x y z a) (max (abs x) (abs y) (abs z) (abs a)))
+
+((lambda (x y z a) (max (abs x) (abs y) (abs z) (abs a))) 30 10 20 -100)
+100
+
+((lambda (x y z) (+ x y z)) 10 16 -4)
+22
+((lambda (x) (null x)) 100)
+nil
+((lambda () 17.2))
+17.2
+

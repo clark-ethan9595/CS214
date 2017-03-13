@@ -1,0 +1,244 @@
+-- temp_package.adb defines operations for the Temperature type.
+--
+-- Created by: Ethan Clark CS214 Project8
+-- Date: April 13, 2016
+----------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO;
+use Ada.Text_IO, Ada.Float_Text_IO;
+
+package body temp_package is
+
+	new_temp1, new_temp2 : Temperature;
+	user_input : float;
+	user_scale : character;
+
+	----------------------------------------------
+  	-- Init initializes a Temperature variable          
+  	-- Receive: Temp, the Temperature variable;          
+  	--          Degrees, the degrees;         
+  	--          Scale, the degree scale;        
+  	-- Return: Temp, its myDegrees and myScale
+	--	    set to Degrees and Scale
+	----------------------------------------------
+	procedure Init(Temp: out Temperature; Degrees: in float; Scale: in character) is
+	begin
+		if isValid(Degrees, Scale) then
+			Temp.myDegrees := Degrees;
+			Temp.myScale := Scale;
+		end if;
+	end Init;
+
+ 	----------------------------------------------
+  	-- getDegrees(Temp) retrieves Temp.myDegrees        
+  	-- Receive: Temp, a Temperature.                      
+  	-- PRE: Temp has been initialized.            
+  	-- Return: Temp.myDegrees.                     
+  	----------------------------------------------
+	function getDegrees(Temp: in Temperature) return float is
+	begin
+		return Temp.myDegrees;
+	end getDegrees;
+
+	----------------------------------------------
+  	-- getScale(Temp) retrieves Temp.myScale        
+  	-- Receive: Temp, a Temperature.                      
+  	-- PRE: Temp has been initialized.            
+  	-- Return: Temp.myScale.                     
+  	----------------------------------------------
+	function getScale(Temp: in Temperature) return character is
+	begin
+		return Temp.myScale;
+	end getScale;
+
+	----------------------------------------------------------------------------
+	-- setFahrenheit(Temp) sets the current temperature to be in Fahrenheit
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Fahrenheit
+	----------------------------------------------------------------------------
+	procedure setFahrenheit(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'C' or Temp.myScale = 'c' then
+			Temp.myDegrees := (( Temp.myDegrees * (9.0/5.0)) + 32.0 );
+			Temp.myScale := 'F';
+		elsif ( Temp.myScale = 'K' or Temp.myScale = 'k' ) then
+			Temp.myDegrees := (( Temp.myDegrees * (9.0/5.0)) - 459.67) ;
+			Temp.myScale := 'F';
+		end if;
+	end setFahrenheit;
+	
+	-----------------------------------------------------------------------
+	-- setCelsius(Temp) sets the current temperature to be in Celsius
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Celsius
+	-----------------------------------------------------------------------
+	procedure setCelsius(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'F' or Temp.myScale = 'f' then
+			Temp.myDegrees := (( Temp.myDegrees - 32.0) * (5.0/9.0) );
+			Temp.myScale := 'C';
+		elsif ( Temp.myScale = 'K' or Temp.myScale = 'k' ) then
+			Temp.myDegrees := ( Temp.myDegrees - 273.15 );
+			Temp.myScale := 'C';
+		end if;
+	end SetCelsius;
+
+	---------------------------------------------------------------------
+	-- setKelvin(Temp) sets the current temperature to be in Kelvin
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Kelvin
+	---------------------------------------------------------------------
+	procedure setKelvin(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'F' or Temp.myScale = 'f' then
+			Temp.myDegrees := (( Temp.myDegrees + 459.67) * (5.0/9.0) );
+			Temp.myScale := 'K';
+		elsif ( Temp.myScale = 'C' or Temp.myScale = 'c' ) then
+			Temp.myDegrees := ( Temp.myDegrees + 273.15 );
+			Temp.myScale := 'K';
+		end if;
+	end setKelvin;
+
+	---------------------------------------------------------------------
+	-- raise_temp(Temp, Degrees) raises the current degrees by Degrees
+	-- Receive: Temp, a Temperature; Degreess, a float
+	-- PRE: Temp has been initialized and Degrees is the same scale
+	--	as the current myDegrees
+	-- Output: Temp.myDegrees raised by Degrees
+	---------------------------------------------------------------------
+	procedure raise_temp(Temp: out Temperature; Degrees: in float) is
+	begin
+		Temp.myDegrees := Temp.myDegrees + Degrees;
+	end raise_temp;
+
+	---------------------------------------------------------------------
+	-- lower(Temp, Degrees) lowers the current degrees by Degrees
+	-- Receive: Temp, a Temperature; Degreess, a float
+	-- PRE: Temp has been initialized and Degrees is the same scale
+	--	as the current myDegrees
+	-- Output: Temp.myDegrees lowered by Degrees
+	---------------------------------------------------------------------
+	procedure lower(Temp: out Temperature; Degrees: in float) is
+	begin
+		if isValid(Temp.myDegrees - Degrees, Temp.myScale) then
+			Temp.myDegrees := Temp.myDegrees - Degrees;
+		else
+			Put("New temperature would be invalid!");
+		end if;
+		
+	end lower;
+
+	------------------------------------------------------------------
+	-- equals(Temp1, Temp2) checks if the two Temperatures are equal
+	-- Receive: Temp1 and Temp2, both Temperatures
+	-- PRE: Temp1 and Temp2 have already been initialized
+	-- Return: true if they are equal; false if they are not
+	------------------------------------------------------------------
+	function equals(Temp1: in Temperature; Temp2: in Temperature) return boolean is
+	begin
+		Init(new_temp1, getDegrees(Temp1), getScale(Temp1));
+		Init(new_temp2, getDegrees(Temp2), getScale(Temp2));
+
+		setFahrenheit(new_temp1);
+		setFahrenheit(new_temp2);
+
+		if new_temp1.myDegrees = new_temp2.myDegrees then
+			return true;
+		else
+			return false;
+		end if;
+
+	end equals;
+
+	------------------------------------------------------------------
+	-- less_than(Temp1, Temp2) checks if Temp1 is less than Temp2
+	-- Receive: Temp1 and Temp2, both Temperatures
+	-- PRE: Temp1 and Temp2 have already been initialized
+	-- Return: true if Temp1 < Temp2; otherwise return false
+	------------------------------------------------------------------
+	function less_than(Temp1: in Temperature; Temp2: in Temperature) return boolean is
+	begin
+		Init(new_temp1, getDegrees(Temp1), getScale(Temp1));
+		Init(new_temp2, getDegrees(Temp2), getScale(Temp2));
+
+		setFahrenheit(new_temp1);
+		setFahrenheit(new_temp2);
+
+		if new_temp1.myDegrees < new_temp2.myDegrees then
+			return true;
+		else
+			return false;
+		end if;
+
+	end less_than;
+
+	---------------------------------------------------------------------
+	-- readTemp(Temp) reads in the temperature and scale from the user
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has already been initialized
+	-- Output: Temp has new myDegrees and myScale values
+	---------------------------------------------------------------------
+	procedure readTemp(Temp: out Temperature) is
+	begin
+		New_Line;
+		Put("Please enter the temperature: ");
+		Get(user_input);
+		Put("Please enter the scale: ");
+		Get(user_scale);
+
+		if isValid(user_input, user_scale) then
+			Temp.myDegrees := user_input;
+			Temp.myScale := user_scale;
+		else
+			Put("Invalid temperature!");
+		end if;
+	end readTemp;
+
+	---------------------------------------------------------------------
+	-- write(Temp) writes out the temperature and scale in a nice format
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has already been initialized
+	-- Output: myDegrees and myScale in a nice format to the user
+	---------------------------------------------------------------------
+	procedure writeTemp(Temp: in Temperature) is
+	begin
+		Put(Temp.myDegrees);
+		Put(" ");
+		Put(Temp.myScale);
+	end writeTemp;
+
+	----------------------------------------------------------------------------------
+	-- isValid(Degree, Scale) determines if the inputs are valid for a Temperature
+	-- Receive: Degree, a float; Scale, a character
+	-- Return: true if it is valid, false it if is not
+	----------------------------------------------------------------------------------
+	function isValid(Degree: in float; Scale: in character) return boolean is
+	begin
+		if Scale = 'K' or Scale = 'k' then
+			if Degree < 0.0 then
+				return false;
+			else
+				return true;
+			end if;
+		elsif Scale = 'C' or Scale = 'c' then
+			if Degree < -237.0 then
+				return false;
+			else
+				return true;
+			end if;
+		elsif Scale = 'F' or Scale = 'f' then
+			if Degree < -459.0 then
+				return false;
+			else
+				return true;
+			end if;
+		else
+			Put("Invalid temperature");
+			return false;
+		end if;
+	end isValid;
+
+end temp_package;

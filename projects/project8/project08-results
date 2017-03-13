@@ -1,0 +1,1270 @@
+Script started on Thu 14 Apr 2016 08:34:39 PM EDT
+elc3@leibniz:~/Documents/214/code/projects/project8/Java$ cat Temperature.java
+/* Temperature.java implements class Temperature.
+ *
+ * Completed by: Ethan Clark Project8
+ * Date: April 12, 2016
+ */
+
+import java.util.Scanner;
+
+class Temperature
+{
+
+	// Create the private instance variables for the class Temperature
+	private double myDegrees;
+	private char myScale;
+
+	/*****************************************************************
+	* Temperature constructs a temperature from a double and a char  *
+	* Receive: Degrees, a double; scale, a character                 *
+	* Output: Set Degrees to myDegrees and scale to myScale          *
+	*****************************************************************/
+	public Temperature(double Degrees, char scale)
+	{
+		if ( isValid(Degrees, scale) )
+		{
+			myDegrees = Degrees;
+			myScale = scale;
+		}
+		else
+		{
+			System.out.println("Invalid temperature requirements");
+		}
+	}
+
+	/****************************************************************
+	* getDegrees() returns the current double myDegrees             *
+	* Receive: nothing                                              *
+	* Precondition: myDegrees has been set                          *
+	* Return: double myDegrees                                      *
+	****************************************************************/
+	public double getDegrees()
+	{
+		return myDegrees;
+	}
+
+	/****************************************************************
+	* getScale() returns the current char myScale                   *
+	* Receive: nothing                                              *
+	* Precondition: myScale has been set                            *
+	* Return: char myScale                                          *
+	****************************************************************/
+	public char getScale()
+	{
+		return myScale;
+	}
+
+	/*********************************************************************************
+	* setDegreesFahrenheit() returns the degrees from the Temperature in Fahrenheit  *
+	* Receive: Temperature temp                                                      *
+	* Precondition: temp has already been set/declared                               *
+	* Return: myDegrees from temp in Fahrenheit                                      *
+	*********************************************************************************/
+	public void setDegreesFahrenheit()
+	{
+		if ( getScale() == 'K' || getScale() == 'k' )
+		{
+			myDegrees = ((getDegrees() * (9.0/5.0)) - 459.67);
+			myScale = 'F';
+		}
+		else if ( getScale() == 'C' || getScale() == 'c' )
+		{
+			myDegrees = ((getDegrees() * (9.0/5.0)) + 32.0);
+			myScale = 'F';
+		}
+	}
+
+	/*********************************************************************************
+	* setDegreesCelsius() sets myDegrees to be Celsius                               *
+	* Receive: None                                                                  *
+	* Output: myDegrees is now in Celsius                                            *
+	*********************************************************************************/
+	public void setDegreesCelsius()
+	{
+		if ( getScale() == 'K' || getScale() == 'k' )
+		{
+			myDegrees = (getDegrees() - 273.15);
+			myScale = 'C';
+		}
+		else if ( getScale() == 'F' || getScale() == 'f' )
+		{
+			myDegrees = ((getDegrees() - 32.0) * (5.0/9.0));
+			myScale = 'C';
+		}
+	}
+
+	/*********************************************************************************
+	* setDegreesKelvin() returns the degrees from the Temperature in Kelvin          *
+	* Receive: None                                                                  *
+	* Output: myDegrees is now in Kelvin                                             *
+	*********************************************************************************/
+	public void setDegreesKelvin()
+	{
+		if ( getScale() == 'F' || getScale() == 'f' )
+		{
+			myDegrees = ((getDegrees() + 459.67) * (5.0/9.0));
+			myScale = 'K';
+		}
+		else if ( getScale() == 'C' || getScale() == 'c' )
+		{
+			myDegrees = (getDegrees() + 273.15);
+			myScale = 'K';
+		}
+	}
+
+	/*********************************************************************************
+	* raise() updates the myDegrees to be raised by Degrees                          *
+	* Receive: double Degrees                                                        *
+	* Output: myDegrees is myDegrees plus Degrees                                    *
+	*********************************************************************************/
+	public void raise(double Degrees)
+	{
+		myDegrees = myDegrees + Degrees;
+	}
+	
+	/**********************************************************************************
+	* lower() updates the myDegrees to be lowered by Degrees                          *
+	* Receive: double Degrees                                                         *
+	* Output: myDegrees is myDegrees minus Degrees                                    *
+	**********************************************************************************/
+	public void lower(double Degrees)
+	{
+		if ( isValid(myDegrees - Degrees, myScale) )
+			myDegrees = myDegrees - Degrees;
+		else
+			System.out.println("New temperature is invalid!");
+	}
+
+	/*************************************************************************
+	* equals() checks if the two temperatures are equal                      *
+	* Receive: Temperature temp                                              *
+	* Return: boolean true or false                                          *
+	*************************************************************************/
+	public boolean equals(Temperature temp)
+	{
+		char temp_scale = getScale();
+
+		temp.setDegreesFahrenheit();
+		setDegreesFahrenheit();
+
+		if ( temp.getDegrees() == getDegrees() )
+		{
+			if ( temp_scale == 'C' || temp_scale == 'c' )
+				setDegreesCelsius();
+			else if ( temp_scale == 'K' || temp_scale == 'k' )
+				setDegreesKelvin();
+			return true;
+		} else
+			return false;
+	}
+
+	/*************************************************************************
+	* less_than() checks if the two temperatures are equal                   *
+	* Receive: Temperature temp                                              *
+	* Return: boolean true or false                                          *
+	*************************************************************************/
+	public boolean less_than(Temperature temp)
+	{
+		char temp_scale = getScale();
+
+		temp.setDegreesFahrenheit();
+		setDegreesFahrenheit();
+
+		if ( getDegrees() < temp.getDegrees() )
+		{
+			if ( temp_scale == 'C' || temp_scale == 'c' )
+				setDegreesCelsius();
+			else if ( temp_scale == 'K' || temp_scale == 'k' )
+				setDegreesKelvin();
+			return true;
+		} else
+			return false;
+	}
+	
+	/****************************************************************
+	* readTemp() reads in the degrees and scale from the user       *
+	* Receive: Scanner keyboard for the input                       *
+	* Output: myDegrees and myScale are set to what the user input  *
+	****************************************************************/
+	public void readTemp(Scanner keyboard)
+	{
+		System.out.println("Please enter the degrees and scale: ");
+		String temp_and_scale = keyboard.nextLine();
+
+		String[] theArray = temp_and_scale.split(" ");
+
+		String theDegrees = theArray[0];
+		double Degrees = Double.parseDouble(theDegrees);
+
+		String current_scale = theArray[1];
+		char Scale = current_scale.charAt(0);
+
+		if ( isValid(Degrees, Scale) )
+		{
+			myDegrees = Degrees;
+			myScale = Scale;
+		}
+		else {
+			System.out.println("Invalid temperature");
+		}
+	}
+
+	/*********************************************************************************
+	* writeTemp() writes out the degrees and the scale in String format to the user  *
+	* Receive: None                                                                  *
+	* Return: String in the format degrees + scale                                   *
+	*********************************************************************************/
+	public void writeTemp()
+	{
+		double current = getDegrees();
+		System.out.print(Double.toString(current) + " " + getScale());
+	}
+
+	/********************************************************************************************
+	* isValid(Degrees, Scale) determines if the Degrees and Scale would be a valid Temperature  *
+	*		i.e. Cannot be less than absolute zero                                      *
+	* Receive: Degrees, a double; Scale, a char                                                 *
+	* Return: true if it is valid; otherwise returns false                                      *
+	********************************************************************************************/
+	public boolean isValid(double Degrees, char Scale)
+	{
+		if ( Scale == 'K' || Scale == 'k' )
+		{
+			if ( Degrees < 0.0 )
+				return false;
+			else
+				return true;
+		}
+		else if ( Scale == 'C' || Scale == 'c' )
+		{
+			if ( Degrees < -237.0 )
+				return false;
+			else
+				return true;
+		}
+		else if ( Scale == 'F' || Scale == 'f' )
+		{
+			if ( Degrees < -459.0 )
+				return false;
+			else
+				return true;
+		}
+		else
+			return false;
+	}
+}
+elc3@leibniz:~/Documents/214/code/projects/project8/Java$ cat TestRunner.java
+/* TestRunner.java implements and tests class Temperature.
+ * Created by: Ethan Clark
+ * Date: April 12, 2016
+ ************************************************************/
+import org.junit.runner.Result;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.notification.Failure;
+import java.util.Scanner;
+
+public class TestRunner{
+
+	/***********************************************************
+	* main function writes out a table of Fahrenheit, Celsius  *
+	* 	and Kelvin degrees from user input                 *
+	***********************************************************/
+    	public static void main(String[] args) {
+
+		Scanner keyboard = new Scanner(System.in);
+
+		// Prompt the user for the starting temperature
+		System.out.println("Starting Temperature");
+		Temperature start_temp = new Temperature(30.0, 'F');
+		start_temp.readTemp(keyboard);
+
+		// Prompt the user for the ending temperature
+		System.out.println("Limit Temperature");
+		Temperature limit_temp = new Temperature(30.0, 'F');
+		limit_temp.readTemp(keyboard);
+
+		// Prompt the user for the increment value
+		System.out.println("Please enter the increment value: ");
+		double increment = keyboard.nextDouble();
+
+		char starting_scale = start_temp.getScale();
+
+		// While loop to print out the temperature values in a table format in each scale
+		while ( start_temp.less_than(limit_temp) || start_temp.equals(limit_temp) )
+		{
+			// First print out the Fahrenheit degrees
+			start_temp.setDegreesFahrenheit();
+			start_temp.writeTemp();
+			System.out.print("\t");
+			
+			// Second print out the Celsius degrees
+			start_temp.setDegreesCelsius();
+			start_temp.writeTemp();
+			System.out.print("\t");
+		
+			// Third print out the Kelvin degrees
+			start_temp.setDegreesKelvin();
+			start_temp.writeTemp();
+			System.out.print("\n");
+
+			// Determine what the start_temp Scale was to return it back to that Scale
+			if ( starting_scale == 'F' || starting_scale == 'f' )
+			{
+				start_temp.setDegreesFahrenheit();
+			}
+
+			if ( starting_scale == 'C' || starting_scale == 'c' )
+			{
+				start_temp.setDegreesCelsius();
+			}
+
+			if ( starting_scale == 'K' || starting_scale == 'k' )
+			{
+				start_temp.setDegreesKelvin();
+			}
+
+			// Increment the start_temp
+			start_temp.raise(increment);
+		}
+	}
+
+}
+elc3@leibniz:~/Documents/214/code/projects/project8/Java$ javac -cp /usr/share/java/junit4-4.11.jar:. TestRunner.java
+elc3@leibniz:~/Documents/214/code/projects/project8/Java$ java -cp /usr/share/java/junit4-4.11.jar:. TestRunner
+Starting Temperature
+Please enter the degrees and scale: 
+0 F
+Limit Temperature
+Please enter the degrees and scale: 
+100 C
+Please enter the increment value: 
+2.5
+0.0 F	-17.77777777777778 C	255.3722222222222 K
+2.499999999999943 F	-16.38888888888892 C	256.76111111111106 K
+4.999999999999886 F	-15.000000000000064 C	258.1499999999999 K
+7.4999999999998295 F	-13.611111111111207 C	259.5388888888888 K
+9.999999999999773 F	-12.22222222222235 C	260.92777777777764 K
+12.499999999999716 F	-10.833333333333492 C	262.3166666666665 K
+14.999999999999659 F	-9.444444444444635 C	263.70555555555535 K
+17.499999999999602 F	-8.055555555555777 C	265.0944444444442 K
+19.999999999999545 F	-6.666666666666919 C	266.48333333333306 K
+22.49999999999949 F	-5.277777777778062 C	267.8722222222219 K
+24.99999999999943 F	-3.888888888889205 C	269.2611111111108 K
+27.499999999999375 F	-2.5000000000003473 C	270.64999999999964 K
+29.999999999999318 F	-1.1111111111114902 C	272.0388888888885 K
+32.49999999999926 F	0.27777777777736723 C	273.42777777777735 K
+34.999999999999204 F	1.6666666666662246 C	274.8166666666662 K
+37.49999999999915 F	3.055555555555082 C	276.20555555555507 K
+39.99999999999909 F	4.444444444443939 C	277.5944444444439 K
+42.499999999999034 F	5.833333333332797 C	278.9833333333328 K
+44.99999999999898 F	7.222222222221654 C	280.37222222222164 K
+47.49999999999892 F	8.611111111110512 C	281.7611111111105 K
+49.99999999999886 F	9.99999999999937 C	283.14999999999935 K
+52.499999999998806 F	11.388888888888227 C	284.5388888888882 K
+54.999999999998806 F	12.777777777777116 C	285.92777777777707 K
+57.49999999999869 F	14.166666666665941 C	287.3166666666659 K
+59.99999999999869 F	15.55555555555483 C	288.7055555555548 K
+62.49999999999858 F	16.944444444443654 C	290.09444444444364 K
+64.99999999999858 F	18.333333333332543 C	291.4833333333325 K
+67.49999999999847 F	19.72222222222137 C	292.87222222222135 K
+69.99999999999847 F	21.111111111110258 C	294.2611111111102 K
+72.49999999999835 F	22.499999999999087 C	295.64999999999907 K
+74.99999999999835 F	23.888888888887973 C	297.0388888888879 K
+77.49999999999824 F	25.2777777777768 C	298.4277777777768 K
+79.99999999999824 F	26.666666666665687 C	299.81666666666564 K
+82.49999999999812 F	28.055555555554516 C	301.2055555555545 K
+84.99999999999812 F	29.444444444443402 C	302.59444444444335 K
+87.49999999999801 F	30.83333333333223 C	303.9833333333322 K
+89.99999999999801 F	32.22222222222112 C	305.3722222222211 K
+92.49999999999801 F	33.611111111110006 C	306.76111111111 K
+94.99999999999801 F	34.9999999999989 C	308.1499999999989 K
+97.49999999999801 F	36.388888888887784 C	309.53888888888775 K
+99.99999999999801 F	37.77777777777668 C	310.92777777777667 K
+102.49999999999801 F	39.16666666666556 C	312.3166666666655 K
+104.9999999999979 F	40.55555555555439 C	313.7055555555544 K
+107.4999999999979 F	41.94444444444328 C	315.09444444444324 K
+109.99999999999778 F	43.33333333333211 C	316.4833333333321 K
+112.49999999999778 F	44.72222222222099 C	317.87222222222096 K
+114.99999999999767 F	46.11111111110982 C	319.2611111111098 K
+117.49999999999767 F	47.49999999999871 C	320.64999999999867 K
+119.99999999999756 F	48.888888888887536 C	322.0388888888875 K
+122.49999999999756 F	50.27777777777642 C	323.4277777777764 K
+124.99999999999744 F	51.66666666666525 C	324.81666666666524 K
+127.49999999999744 F	53.055555555554136 C	326.2055555555541 K
+129.99999999999733 F	54.444444444442965 C	327.59444444444296 K
+132.49999999999733 F	55.83333333333185 C	328.9833333333318 K
+134.99999999999721 F	57.22222222222068 C	330.37222222222067 K
+137.49999999999721 F	58.611111111109565 C	331.7611111111095 K
+139.9999999999971 F	59.999999999998394 C	333.1499999999984 K
+142.4999999999971 F	61.38888888888728 C	334.53888888888724 K
+144.999999999997 F	62.77777777777611 C	335.9277777777761 K
+147.499999999997 F	64.166666666665 C	337.31666666666496 K
+149.99999999999687 F	65.55555555555382 C	338.7055555555538 K
+152.49999999999687 F	66.94444444444271 C	340.0944444444427 K
+154.99999999999676 F	68.33333333333154 C	341.48333333333153 K
+157.49999999999676 F	69.72222222222042 C	342.8722222222204 K
+159.99999999999665 F	71.11111111110925 C	344.26111111110924 K
+162.49999999999665 F	72.49999999999814 C	345.6499999999981 K
+164.99999999999653 F	73.88888888888697 C	347.03888888888696 K
+167.49999999999653 F	75.27777777777585 C	348.4277777777758 K
+169.99999999999642 F	76.66666666666468 C	349.8166666666647 K
+172.49999999999642 F	78.05555555555357 C	351.20555555555353 K
+174.9999999999963 F	79.4444444444424 C	352.5944444444424 K
+177.4999999999963 F	80.83333333333128 C	353.98333333333125 K
+179.9999999999962 F	82.22222222222011 C	355.3722222222201 K
+182.4999999999962 F	83.611111111109 C	356.76111111110896 K
+184.99999999999608 F	84.99999999999783 C	358.1499999999978 K
+187.49999999999608 F	86.38888888888671 C	359.5388888888867 K
+189.99999999999596 F	87.77777777777554 C	360.92777777777553 K
+192.49999999999596 F	89.16666666666443 C	362.3166666666644 K
+194.99999999999585 F	90.55555555555325 C	363.70555555555325 K
+197.49999999999585 F	91.94444444444214 C	365.0944444444421 K
+199.99999999999574 F	93.33333333333097 C	366.48333333333096 K
+202.49999999999574 F	94.72222222221986 C	367.8722222222198 K
+204.99999999999562 F	96.11111111110868 C	369.2611111111087 K
+207.49999999999562 F	97.49999999999757 C	370.64999999999753 K
+209.9999999999955 F	98.8888888888864 C	372.0388888888864 K
+elc3@leibniz:~/Documents/214/code/projects/project8/Java$ exit
+
+Script done on Thu 14 Apr 2016 08:35:32 PM EDT
+Script started on Thu 14 Apr 2016 07:12:36 PM EDT
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ cat temp_package.adb
+-- temp_package.adb defines operations for the Temperature type.
+--
+-- Created by: Ethan Clark CS214 Project8
+-- Date: April 13, 2016
+----------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO;
+use Ada.Text_IO, Ada.Float_Text_IO;
+
+package body temp_package is
+
+	-- Declare variables to be used later in some of the functions
+	new_temp1, new_temp2 : Temperature;
+	user_input : float;
+	user_scale : character;
+
+	----------------------------------------------
+  	-- Init initializes a Temperature variable          
+  	-- Receive: Temp, the Temperature variable;          
+  	--          Degrees, the degrees;         
+  	--          Scale, the degree scale;        
+  	-- Return: Temp, its myDegrees and myScale
+	--	    set to Degrees and Scale
+	----------------------------------------------
+	procedure Init(Temp: out Temperature; Degrees: in float; Scale: in character) is
+	begin
+		if isValid(Degrees, Scale) then
+			Temp.myDegrees := Degrees;
+			Temp.myScale := Scale;
+		end if;
+	end Init;
+
+ 	----------------------------------------------
+  	-- getDegrees(Temp) retrieves Temp.myDegrees        
+  	-- Receive: Temp, a Temperature.                      
+  	-- PRE: Temp has been initialized.            
+  	-- Return: Temp.myDegrees.                     
+  	----------------------------------------------
+	function getDegrees(Temp: in Temperature) return float is
+	begin
+		return Temp.myDegrees;
+	end getDegrees;
+
+	----------------------------------------------
+  	-- getScale(Temp) retrieves Temp.myScale        
+  	-- Receive: Temp, a Temperature.                      
+  	-- PRE: Temp has been initialized.            
+  	-- Return: Temp.myScale.                     
+  	----------------------------------------------
+	function getScale(Temp: in Temperature) return character is
+	begin
+		return Temp.myScale;
+	end getScale;
+
+	----------------------------------------------------------------------------
+	-- setFahrenheit(Temp) sets the current temperature to be in Fahrenheit
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Fahrenheit
+	----------------------------------------------------------------------------
+	procedure setFahrenheit(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'C' or Temp.myScale = 'c' then
+			Temp.myDegrees := (( Temp.myDegrees * (9.0/5.0)) + 32.0 );
+			Temp.myScale := 'F';
+		elsif ( Temp.myScale = 'K' or Temp.myScale = 'k' ) then
+			Temp.myDegrees := (( Temp.myDegrees * (9.0/5.0)) - 459.67) ;
+			Temp.myScale := 'F';
+		end if;
+	end setFahrenheit;
+	
+	-----------------------------------------------------------------------
+	-- setCelsius(Temp) sets the current temperature to be in Celsius
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Celsius
+	-----------------------------------------------------------------------
+	procedure setCelsius(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'F' or Temp.myScale = 'f' then
+			Temp.myDegrees := (( Temp.myDegrees - 32.0) * (5.0/9.0) );
+			Temp.myScale := 'C';
+		elsif ( Temp.myScale = 'K' or Temp.myScale = 'k' ) then
+			Temp.myDegrees := ( Temp.myDegrees - 273.15 );
+			Temp.myScale := 'C';
+		end if;
+	end SetCelsius;
+
+	---------------------------------------------------------------------
+	-- setKelvin(Temp) sets the current temperature to be in Kelvin
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has been initialized.
+	-- Output: Temp.myDegrees is now in Kelvin
+	---------------------------------------------------------------------
+	procedure setKelvin(Temp: out Temperature) is
+	begin
+		if Temp.myScale = 'F' or Temp.myScale = 'f' then
+			Temp.myDegrees := (( Temp.myDegrees + 459.67) * (5.0/9.0) );
+			Temp.myScale := 'K';
+		elsif ( Temp.myScale = 'C' or Temp.myScale = 'c' ) then
+			Temp.myDegrees := ( Temp.myDegrees + 273.15 );
+			Temp.myScale := 'K';
+		end if;
+	end setKelvin;
+
+	---------------------------------------------------------------------
+	-- raise_temp(Temp, Degrees) raises the current degrees by Degrees
+	-- Receive: Temp, a Temperature; Degreess, a float
+	-- PRE: Temp has been initialized and Degrees is the same scale
+	--	as the current myDegrees
+	-- Output: Temp.myDegrees raised by Degrees
+	---------------------------------------------------------------------
+	procedure raise_temp(Temp: out Temperature; Degrees: in float) is
+	begin
+		Temp.myDegrees := Temp.myDegrees + Degrees;
+	end raise_temp;
+
+	---------------------------------------------------------------------
+	-- lower(Temp, Degrees) lowers the current degrees by Degrees
+	-- Receive: Temp, a Temperature; Degreess, a float
+	-- PRE: Temp has been initialized and Degrees is the same scale
+	--	as the current myDegrees
+	-- Output: Temp.myDegrees lowered by Degrees
+	---------------------------------------------------------------------
+	procedure lower(Temp: out Temperature; Degrees: in float) is
+	begin
+		if isValid(Temp.myDegrees - Degrees, Temp.myScale) then
+			Temp.myDegrees := Temp.myDegrees - Degrees;
+		else
+			Put("New temperature would be invalid!");
+		end if;
+		
+	end lower;
+
+	------------------------------------------------------------------
+	-- equals(Temp1, Temp2) checks if the two Temperatures are equal
+	-- Receive: Temp1 and Temp2, both Temperatures
+	-- PRE: Temp1 and Temp2 have already been initialized
+	-- Return: true if they are equal; false if they are not
+	------------------------------------------------------------------
+	function equals(Temp1: in Temperature; Temp2: in Temperature) return boolean is
+	begin
+		Init(new_temp1, getDegrees(Temp1), getScale(Temp1));
+		Init(new_temp2, getDegrees(Temp2), getScale(Temp2));
+
+		setFahrenheit(new_temp1);
+		setFahrenheit(new_temp2);
+
+		if new_temp1.myDegrees = new_temp2.myDegrees then
+			return true;
+		else
+			return false;
+		end if;
+
+	end equals;
+
+	------------------------------------------------------------------
+	-- less_than(Temp1, Temp2) checks if Temp1 is less than Temp2
+	-- Receive: Temp1 and Temp2, both Temperatures
+	-- PRE: Temp1 and Temp2 have already been initialized
+	-- Return: true if Temp1 < Temp2; otherwise return false
+	------------------------------------------------------------------
+	function less_than(Temp1: in Temperature; Temp2: in Temperature) return boolean is
+	begin
+		Init(new_temp1, getDegrees(Temp1), getScale(Temp1));
+		Init(new_temp2, getDegrees(Temp2), getScale(Temp2));
+
+		setFahrenheit(new_temp1);
+		setFahrenheit(new_temp2);
+
+		if new_temp1.myDegrees < new_temp2.myDegrees then
+			return true;
+		else
+			return false;
+		end if;
+
+	end less_than;
+
+	---------------------------------------------------------------------
+	-- readTemp(Temp) reads in the temperature and scale from the user
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has already been initialized
+	-- Output: Temp has new myDegrees and myScale values
+	---------------------------------------------------------------------
+	procedure readTemp(Temp: out Temperature) is
+	begin
+		New_Line;
+		Put("Please enter the temperature: ");
+		Get(user_input);
+		Put("Please enter the scale: ");
+		Get(user_scale);
+
+		if isValid(user_input, user_scale) then
+			Temp.myDegrees := user_input;
+			Temp.myScale := user_scale;
+		else
+			Put("Invalid temperature!");
+		end if;
+	end readTemp;
+
+	---------------------------------------------------------------------
+	-- write(Temp) writes out the temperature and scale in a nice format
+	-- Receive: Temp, a Temperature
+	-- PRE: Temp has already been initialized
+	-- Output: myDegrees and myScale in a nice format to the user
+	---------------------------------------------------------------------
+	procedure writeTemp(Temp: in Temperature) is
+	begin
+		Put(Temp.myDegrees);
+		Put(" ");
+		Put(Temp.myScale);
+	end writeTemp;
+
+	----------------------------------------------------------------------------------
+	-- isValid(Degree, Scale) determines if the inputs are valid for a Temperature
+	-- Receive: Degree, a float; Scale, a character
+	-- Return: true if it is valid, false it if is not
+	----------------------------------------------------------------------------------
+	function isValid(Degree: in float; Scale: in character) return boolean is
+	begin
+		if Scale = 'K' or Scale = 'k' then
+			if Degree < 0.0 then
+				return false;
+			else
+				return true;
+			end if;
+		elsif Scale = 'C' or Scale = 'c' then
+			if Degree < -237.0 then
+				return false;
+			else
+				return true;
+			end if;
+		elsif Scale = 'F' or Scale = 'f' then
+			if Degree < -459.0 then
+				return false;
+			else
+				return true;
+			end if;
+		else
+			Put("Invalid temperature");
+			return false;
+		end if;
+	end isValid;
+
+end temp_package;
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ cat T temp_package.ads
+-- temp_package.ads declares the Temperature type and its operations.
+--
+-- Created by: Ethan Clark CS214 Project8
+-- Date: April 13, 2016
+---------------------------------------------------------------------
+
+package temp_package is
+
+	-- Declare the Temperature type to be private
+	type Temperature is private;
+
+	-- Declare all the Temperature methods to be used in the body of temp_package
+	procedure Init(Temp: out Temperature; Degrees: in float; Scale: in character);
+
+	function getDegrees(Temp: in Temperature) return float;
+
+	function getScale(Temp: in Temperature) return character;
+
+	procedure setFahrenheit(Temp: out Temperature);	
+
+	procedure setCelsius(Temp: out Temperature);
+
+	procedure setKelvin(Temp: out Temperature);
+
+	procedure raise_temp(Temp: out Temperature; Degrees: in float);
+
+	procedure lower(Temp: out Temperature; Degrees: in float);
+
+	function equals(Temp1: in Temperature; Temp2: in Temperature) return boolean;
+
+	function less_than(Temp1: in Temperature; Temp2: in Temperature) return boolean;
+
+	procedure readTemp(Temp: out Temperature);
+
+	procedure writeTemp(Temp: in Temperature);
+
+	function isValid(Degree: in float; Scale: in character) return boolean;
+
+	-- Declare private section of temp_package
+	private
+
+		-- Create the Temperature record with the two instance variables
+		type Temperature is record
+			myDegrees : float;
+			myScale : character;
+		end record;
+
+end temp_package;
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ cat temperature.adb
+-- temperature.adb "test-drives" the Temperature type.
+--
+-- Created by: Ethan Clark for CS214 Project8
+-- Date: April 13, 2016
+------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO, temp_package;
+use Ada.Text_IO, Ada.Float_Text_IO, temp_package;
+
+procedure temperature is
+
+	-- Declaring variables to be used later in the table test procedure
+	start_Temp, end_temp : temp_package.Temperature;
+	increment_val : float;
+	temp_scale : character;
+
+begin
+	-- Prompt the user for the starting temperature
+	Put("Starting Temperature");
+	readTemp(start_Temp);
+
+	-- Prompt the user for the ending temperature
+	Put("Ending Temperature");
+	readTemp(end_temp);
+
+	-- Prompt the user for the increment value
+	Put("Please enter the increment value: ");
+	Get(increment_val);
+
+	temp_scale := getScale(start_temp);
+
+	-- While loop to print out the temperature values in a table format in each scale
+	while ( less_than(start_temp, end_temp) or equals(start_temp, end_temp) ) loop
+
+		-- First print out the Fahrenheit degrees
+		setFahrenheit(start_temp);
+		writeTemp(start_temp);
+		Put("     ");
+
+		-- Second print out the Celsius degrees
+		setCelsius(start_temp);
+		writeTemp(start_temp);
+		Put("     ");
+		
+		-- Third print out the Celsius degrees
+		setKelvin(start_temp);
+		writeTemp(start_temp);
+		New_Line;
+
+		-- Determine what the start_temp Scale was to return it back to that Scale
+		if ( temp_scale = 'F' or temp_scale = 'f' ) then
+			setFahrenheit(start_temp);
+		elsif ( temp_scale = 'K' or temp_scale = 'k' ) then
+			setKelvin(start_temp);
+		elsif ( temp_scale = 'C' or temp_scale = 'c' ) then
+			setCelsius(start_temp);
+		end if;
+	
+		-- Increment the start_temp by increment_val
+		raise_temp(start_temp, increment_val);
+
+	end loop;
+
+end temperature;
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ gnatmake temperature.adb
+gcc-4.8 -c temperature.adb
+gcc-4.8 -c temp_package.adb
+temp_package.adb:63:20: warning: "Temp.myScale" may be referenced before it has a value
+temp_package.adb:80:20: warning: "Temp.myScale" may be referenced before it has a value
+temp_package.adb:97:20: warning: "Temp.myScale" may be referenced before it has a value
+temp_package.adb:115:35: warning: "Temp.myDegrees" may be referenced before it has a value
+temp_package.adb:127:28: warning: "Temp.myDegrees" may be referenced before it has a value
+gnatbind -x temperature.ali
+gnatlink temperature.ali
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ ./temperature
+Starting Temperature
+Please enter the temperature: 0
+Please enter the scale: F
+Ending Temperature
+Please enter the temperature: 100
+Please enter the scale: C
+Please enter the increment value: 2.5
+ 0.00000E+00 F     -1.77778E+01 C      2.55372E+02 K
+ 2.49997E+00 F     -1.63889E+01 C      2.56761E+02 K
+ 4.99991E+00 F     -1.50001E+01 C      2.58150E+02 K
+ 7.49985E+00 F     -1.36112E+01 C      2.59539E+02 K
+ 9.99979E+00 F     -1.22223E+01 C      2.60928E+02 K
+ 1.24997E+01 F     -1.08335E+01 C      2.62316E+02 K
+ 1.49997E+01 F     -9.44463E+00 C      2.63705E+02 K
+ 1.74996E+01 F     -8.05578E+00 C      2.65094E+02 K
+ 1.99995E+01 F     -6.66692E+00 C      2.66483E+02 K
+ 2.24995E+01 F     -5.27807E+00 C      2.67872E+02 K
+ 2.49994E+01 F     -3.88921E+00 C      2.69261E+02 K
+ 2.74994E+01 F     -2.50036E+00 C      2.70650E+02 K
+ 2.99993E+01 F     -1.11150E+00 C      2.72038E+02 K
+ 3.24992E+01 F      2.77354E-01 C      2.73427E+02 K
+ 3.49992E+01 F      1.66621E+00 C      2.74816E+02 K
+ 3.74991E+01 F      3.05506E+00 C      2.76205E+02 K
+ 3.99991E+01 F      4.44392E+00 C      2.77594E+02 K
+ 4.24990E+01 F      5.83277E+00 C      2.78983E+02 K
+ 4.49989E+01 F      7.22163E+00 C      2.80372E+02 K
+ 4.74989E+01 F      8.61048E+00 C      2.81760E+02 K
+ 4.99988E+01 F      9.99934E+00 C      2.83149E+02 K
+ 5.24987E+01 F      1.13882E+01 C      2.84538E+02 K
+ 5.49987E+01 F      1.27770E+01 C      2.85927E+02 K
+ 5.74986E+01 F      1.41659E+01 C      2.87316E+02 K
+ 5.99986E+01 F      1.55548E+01 C      2.88705E+02 K
+ 6.24985E+01 F      1.69436E+01 C      2.90094E+02 K
+ 6.49984E+01 F      1.83325E+01 C      2.91482E+02 K
+ 6.74984E+01 F      1.97213E+01 C      2.92871E+02 K
+ 6.99983E+01 F      2.11102E+01 C      2.94260E+02 K
+ 7.24983E+01 F      2.24990E+01 C      2.95649E+02 K
+ 7.49982E+01 F      2.38879E+01 C      2.97038E+02 K
+ 7.74981E+01 F      2.52767E+01 C      2.98427E+02 K
+ 7.99981E+01 F      2.66656E+01 C      2.99816E+02 K
+ 8.24980E+01 F      2.80545E+01 C      3.01204E+02 K
+ 8.49980E+01 F      2.94433E+01 C      3.02593E+02 K
+ 8.74979E+01 F      3.08322E+01 C      3.03982E+02 K
+ 8.99978E+01 F      3.22210E+01 C      3.05371E+02 K
+ 9.24978E+01 F      3.36099E+01 C      3.06760E+02 K
+ 9.49977E+01 F      3.49987E+01 C      3.08149E+02 K
+ 9.74977E+01 F      3.63876E+01 C      3.09538E+02 K
+ 9.99976E+01 F      3.77764E+01 C      3.10926E+02 K
+ 1.02498E+02 F      3.91653E+01 C      3.12315E+02 K
+ 1.04997E+02 F      4.05541E+01 C      3.13704E+02 K
+ 1.07497E+02 F      4.19430E+01 C      3.15093E+02 K
+ 1.09997E+02 F      4.33319E+01 C      3.16482E+02 K
+ 1.12497E+02 F      4.47207E+01 C      3.17871E+02 K
+ 1.14997E+02 F      4.61096E+01 C      3.19260E+02 K
+ 1.17497E+02 F      4.74984E+01 C      3.20648E+02 K
+ 1.19997E+02 F      4.88873E+01 C      3.22037E+02 K
+ 1.22497E+02 F      5.02761E+01 C      3.23426E+02 K
+ 1.24997E+02 F      5.16650E+01 C      3.24815E+02 K
+ 1.27497E+02 F      5.30538E+01 C      3.26204E+02 K
+ 1.29997E+02 F      5.44427E+01 C      3.27593E+02 K
+ 1.32497E+02 F      5.58316E+01 C      3.28982E+02 K
+ 1.34997E+02 F      5.72204E+01 C      3.30370E+02 K
+ 1.37497E+02 F      5.86093E+01 C      3.31759E+02 K
+ 1.39997E+02 F      5.99981E+01 C      3.33148E+02 K
+ 1.42497E+02 F      6.13870E+01 C      3.34537E+02 K
+ 1.44996E+02 F      6.27758E+01 C      3.35926E+02 K
+ 1.47496E+02 F      6.41647E+01 C      3.37315E+02 K
+ 1.49996E+02 F      6.55536E+01 C      3.38704E+02 K
+ 1.52496E+02 F      6.69424E+01 C      3.40092E+02 K
+ 1.54996E+02 F      6.83313E+01 C      3.41481E+02 K
+ 1.57496E+02 F      6.97201E+01 C      3.42870E+02 K
+ 1.59996E+02 F      7.11090E+01 C      3.44259E+02 K
+ 1.62496E+02 F      7.24978E+01 C      3.45648E+02 K
+ 1.64996E+02 F      7.38867E+01 C      3.47037E+02 K
+ 1.67496E+02 F      7.52756E+01 C      3.48426E+02 K
+ 1.69996E+02 F      7.66644E+01 C      3.49814E+02 K
+ 1.72496E+02 F      7.80533E+01 C      3.51203E+02 K
+ 1.74996E+02 F      7.94421E+01 C      3.52592E+02 K
+ 1.77496E+02 F      8.08310E+01 C      3.53981E+02 K
+ 1.79996E+02 F      8.22198E+01 C      3.55370E+02 K
+ 1.82496E+02 F      8.36087E+01 C      3.56759E+02 K
+ 1.84996E+02 F      8.49975E+01 C      3.58148E+02 K
+ 1.87496E+02 F      8.63864E+01 C      3.59536E+02 K
+ 1.89995E+02 F      8.77753E+01 C      3.60925E+02 K
+ 1.92495E+02 F      8.91641E+01 C      3.62314E+02 K
+ 1.94995E+02 F      9.05530E+01 C      3.63703E+02 K
+ 1.97495E+02 F      9.19418E+01 C      3.65092E+02 K
+ 1.99995E+02 F      9.33307E+01 C      3.66481E+02 K
+ 2.02495E+02 F      9.47195E+01 C      3.67870E+02 K
+ 2.04995E+02 F      9.61084E+01 C      3.69258E+02 K
+ 2.07495E+02 F      9.74972E+01 C      3.70647E+02 K
+ 2.09995E+02 F      9.88861E+01 C      3.72036E+02 K
+elc3@leibniz:~/Documents/214/code/projects/project8/Ada$ exit
+
+Script done on Thu 14 Apr 2016 07:14:13 PM EDT
+Script started on Thu 14 Apr 2016 08:26:09 PM EDT
+elc3@leibniz:~/Documents/214/code/projects/project8/Ruby$ cat Temperature.rb
+# Temperature.rb holds the infromation for the Class Temperature
+#
+# Completed by: Ethan Clark Project8
+# Date: April 14, 2016
+#################################################################
+
+# Wraps the Class Temperature into this module
+module Temperatures
+
+# Class Temperature to model a Temperature with degrees and scale
+class Temperature
+
+	# Initializer to initialize the Temperature type
+	def initialize(degree, scale)
+		if ( isValid(degree, scale) ) then
+			@degree = degree
+			@scale = scale
+		else
+			print "Invalid Temperature"
+		end
+	end
+
+	# Accessor methods for the Temperature type
+	attr_reader :degree, :scale
+
+	##########################################################################
+	## setFahrenheit() converts the current degrees to be in Fahrenheit     ##
+	## Receive: Nothing                                                     ##
+	## Output: Updated degrees in Fahrenheit and scale changed to 'F'       ##
+	##########################################################################
+	def setFahrenheit()
+		if ( @scale == 'K' or @scale == 'k' ) then
+			@degree = ((@degree * (9.0/5.0)) - 459.67)
+			@scale = 'F'
+		elsif ( @scale == 'C' or @scale == 'c' ) then
+			@degree = ((@degree * (9.0/5.0)) + 32.0)
+			@scale = 'F'
+		end
+	end
+
+	##########################################################################
+	## setCelsius() converts the current degrees to be in Celsius           ##
+	## Receive: Nothing                                                     ##
+	## Output: Updated degrees in Celsius and scale changed to 'C'          ##
+	##########################################################################
+	def setCelsius()
+		if ( @scale == 'K' or @scale == 'k' ) then
+			@degree = (@degree - 273.15)
+			@scale = 'C'
+		elsif ( @scale == 'F' or @scale == 'f' ) then
+			@degree = ((@degree - 32.0) * (5.0/9.0))
+			@scale = 'C'
+		end
+	end
+
+	##########################################################################
+	## setKelvin() converts the current degrees to be in Kelvin             ##
+	## Receive: Nothing                                                     ##
+	## Output: Updated degrees in Kelvin and scale changed to 'K'           ##
+	##########################################################################
+	def setKelvin()
+		if ( @scale == 'F' or @scale == 'f' ) then
+			@degree = ((@degree + 459.67) * (5.0/9.0))
+			@scale = 'K'
+		elsif ( @scale == 'C' or @scale == 'c' ) then
+			@degree = (@degree + 273.15)
+			@scale = 'K'
+		end
+	end
+
+	#############################################################
+	## raise(degrees) increases the current degree by degrees  ##
+	## Recieve: degrees, a float                               ##
+	## Output: @degree is raised by degrees                    ##
+	#############################################################
+	def raise(degrees)
+		@degree = @degree + degrees
+	end
+
+	#############################################################
+	## lower(degrees) decreases the current degree by degrees  ##
+	## Recieve: degrees, a float                               ##
+	## Output: @degree is lowered by degrees                   ##
+	#############################################################
+	def lower(degrees)
+		if ( isValid(@degree - degrees) ) then
+			@degree = @degree - degrees
+		else
+			print "New temperature will be invalid"
+		end
+	end
+
+	################################################################
+	## equals(temp) determines if the two Temperatures are equal  ##
+	## Receive: temp, a Temperature				      ##
+	## PRE: temp has already been initialized		      ##
+	## Output: true if temperatures are equal, otherwise false    ##
+	################################################################
+	def equals(temp)
+
+		temp_scale = @scale
+
+		temp.setFahrenheit
+		setFahrenheit
+
+		if ( @degree == temp.degree ) then
+			if ( temp_scale == 'C' or temp_scale == 'c' ) then
+				setCelsius
+			elsif ( temp_scale == 'K' or temp_scale == 'k' ) then
+				setKelvin
+			end
+			return true
+		else
+			return false
+		end
+	end
+
+	###################################################################################################
+	## less_than(temp) determines if the calling Temperature is less than the parameter Temperature  ##
+	## Receive: temp, a Temperature		                                        		 ##
+	## PRE: temp has already been initialized					                 ##
+	## Output: true if calling Temperature is less than parameter Temperature, otherwise false       ##
+	###################################################################################################
+	def less_than(temp)
+
+		temp_scale = @scale
+
+		temp.setFahrenheit
+		setFahrenheit
+
+		if ( @degree < temp.degree ) then
+			if ( temp_scale == 'C' or temp_scale == 'c' ) then
+				setCelsius
+			elsif ( temp_scale == 'K' or temp_scale == 'k' ) then
+				setKelvin
+			end
+			return true
+		else
+			return false
+		end
+	end
+	
+	####################################################################
+	## readTemp() reads in the degrees and scale from the user        ##
+	## Receive: None                                                  ##
+	## Output: @degree and @scale are set from the user's input       ##
+	####################################################################
+	def readTemp()
+
+		print "Please enter the degrees and scale: "
+		user_input = gets
+
+		new_array = user_input.split(" ")
+
+		degree_temp = new_array[0].to_f
+		temp_string = new_array[1]
+
+		array2 = temp_string.split()
+
+		scale_temp = array2[0]
+
+		if ( isValid(degree_temp, scale_temp) ) then
+			@degree = degree_temp
+			@scale = scale_temp
+		else
+			print "Invalid Temperature"
+		end
+	end
+	
+	##############################################################################
+	## writeTemp() writes out the Temperature degree and scale in a nice format ##
+	## Receive: NONE                                                            ##
+	## Output: degree and scale outputted to the user                           ##
+	##############################################################################
+	def writeTemp()
+		rounded_degree = @degree.round(3)
+		print rounded_degree.to_s + " " + @scale.to_s
+	end	
+	
+	###############################################################################################
+	## isValid(degrees, scale) checks to see if the degrees and scale make a valid temperature   ##
+	##		i.e. Cannot be less than absolute zero                                       ##
+	## Receive: degrees, a float; scale, a character                                             ##
+	## Return: true if valid; otherwise false                                                    ##
+	###############################################################################################
+	def isValid(degrees, scale)
+		if ( scale == 'K' or scale == 'k' ) then
+			if ( degrees < 0.0 ) then
+				return false;
+			else
+				return true;
+			end
+		elsif ( scale == 'C' or scale == 'c' ) then
+			if ( degrees < -237.0 ) then
+				return false;
+			else
+				return true;
+			end
+		elsif ( scale == 'F' or scale == 'f' ) then
+			if ( degrees < -459.0 ) then
+				return false;
+			else
+				return true;
+			end
+		else
+			return false;
+		end
+	end
+end
+
+end
+elc3@leibniz:~/Documents/214/code/projects/project8/Ruby$ cat Te    temperature_test.rb
+# temperature_test.rb tests class Temperature and its operations
+#
+# Created by: Ethan Clark Project8
+# Date: April 14, 2016
+###################################################################
+
+require "./Temperature"
+
+def testTemperature
+
+	# Create two Temperature variables
+	start_Temp = Temperatures::Temperature.new(100.0, 'F')
+	end_Temp = Temperatures::Temperature.new(100.0, 'F')
+
+	# Prompt user for Starting Temperature
+	print "Starting Temperature\n"
+	start_Temp.readTemp
+
+	# Prompt user for Ending Temperature
+	print "Ending Temperature\n"
+	end_Temp.readTemp
+
+	# Prompt user for increment value
+	puts("Please enter increment value: ")
+	increment_value = gets.to_f
+
+	temp_scale = start_Temp.scale
+
+	# While loop to print out the temperature values in a table for each scale
+	while start_Temp.less_than(end_Temp) do
+		
+		# First print out the Fahrenheit degrees
+		start_Temp.setFahrenheit
+		start_Temp.writeTemp
+		print("\t\t")
+
+		# Second print out the Celsius degrees
+		start_Temp.setCelsius
+		start_Temp.writeTemp
+		print("\t\t")
+
+		# Third print out the Kelvin degrees
+		start_Temp.setKelvin
+		start_Temp.writeTemp
+
+		puts("\n")
+
+		# Determine the start_Temp scale to return it to its original format
+		if ( temp_scale == 'F' or temp_scale == 'f' ) then
+			start_Temp.setFahrenheit
+		elsif ( temp_scale == 'K' or temp_scale == 'k' ) then
+			start_Temp.setKelvin
+		elsif ( temp_scale == 'C' or temp_scale == 'c' ) then
+			start_Temp.setCelsius
+		end
+
+		# Increment the start_Temp
+		start_Temp.raise(increment_value)
+
+	end
+		
+end
+
+testTemperature
+elc3@leibniz:~/Documents/214/code/projects/project8/Ruby$ ruby temperture    ature_tex st.rb
+Starting Temperature
+Please enter the degrees and scale: 0.  F
+Ending Temperature
+Please enter the degrees and scale: 100 C
+Please enter increment value: 
+2.5
+0.0 F		-17.778 C		255.372 K
+2.5 F		-16.389 C		256.761 K
+5.0 F		-15.0 C		258.15 K
+7.5 F		-13.611 C		259.539 K
+10.0 F		-12.222 C		260.928 K
+12.5 F		-10.833 C		262.317 K
+15.0 F		-9.444 C		263.706 K
+17.5 F		-8.056 C		265.094 K
+20.0 F		-6.667 C		266.483 K
+22.5 F		-5.278 C		267.872 K
+25.0 F		-3.889 C		269.261 K
+27.5 F		-2.5 C		270.65 K
+30.0 F		-1.111 C		272.039 K
+32.5 F		0.278 C		273.428 K
+35.0 F		1.667 C		274.817 K
+37.5 F		3.056 C		276.206 K
+40.0 F		4.444 C		277.594 K
+42.5 F		5.833 C		278.983 K
+45.0 F		7.222 C		280.372 K
+47.5 F		8.611 C		281.761 K
+50.0 F		10.0 C		283.15 K
+52.5 F		11.389 C		284.539 K
+55.0 F		12.778 C		285.928 K
+57.5 F		14.167 C		287.317 K
+60.0 F		15.556 C		288.706 K
+62.5 F		16.944 C		290.094 K
+65.0 F		18.333 C		291.483 K
+67.5 F		19.722 C		292.872 K
+70.0 F		21.111 C		294.261 K
+72.5 F		22.5 C		295.65 K
+75.0 F		23.889 C		297.039 K
+77.5 F		25.278 C		298.428 K
+80.0 F		26.667 C		299.817 K
+82.5 F		28.056 C		301.206 K
+85.0 F		29.444 C		302.594 K
+87.5 F		30.833 C		303.983 K
+90.0 F		32.222 C		305.372 K
+92.5 F		33.611 C		306.761 K
+95.0 F		35.0 C		308.15 K
+97.5 F		36.389 C		309.539 K
+100.0 F		37.778 C		310.928 K
+102.5 F		39.167 C		312.317 K
+105.0 F		40.556 C		313.706 K
+107.5 F		41.944 C		315.094 K
+110.0 F		43.333 C		316.483 K
+112.5 F		44.722 C		317.872 K
+115.0 F		46.111 C		319.261 K
+117.5 F		47.5 C		320.65 K
+120.0 F		48.889 C		322.039 K
+122.5 F		50.278 C		323.428 K
+125.0 F		51.667 C		324.817 K
+127.5 F		53.056 C		326.206 K
+130.0 F		54.444 C		327.594 K
+132.5 F		55.833 C		328.983 K
+135.0 F		57.222 C		330.372 K
+137.5 F		58.611 C		331.761 K
+140.0 F		60.0 C		333.15 K
+142.5 F		61.389 C		334.539 K
+145.0 F		62.778 C		335.928 K
+147.5 F		64.167 C		337.317 K
+150.0 F		65.556 C		338.706 K
+152.5 F		66.944 C		340.094 K
+155.0 F		68.333 C		341.483 K
+157.5 F		69.722 C		342.872 K
+160.0 F		71.111 C		344.261 K
+162.5 F		72.5 C		345.65 K
+165.0 F		73.889 C		347.039 K
+167.5 F		75.278 C		348.428 K
+170.0 F		76.667 C		349.817 K
+172.5 F		78.056 C		351.206 K
+175.0 F		79.444 C		352.594 K
+177.5 F		80.833 C		353.983 K
+180.0 F		82.222 C		355.372 K
+182.5 F		83.611 C		356.761 K
+185.0 F		85.0 C		358.15 K
+187.5 F		86.389 C		359.539 K
+190.0 F		87.778 C		360.928 K
+192.5 F		89.167 C		362.317 K
+195.0 F		90.556 C		363.706 K
+197.5 F		91.944 C		365.094 K
+200.0 F		93.333 C		366.483 K
+202.5 F		94.722 C		367.872 K
+205.0 F		96.111 C		369.261 K
+207.5 F		97.5 C		370.65 K
+210.0 F		98.889 C		372.039 K
+elc3@leibniz:~/Documents/214/code/projects/project8/Ruby$ exit
+
+Script done on Thu 14 Apr 2016 08:26:39 PM EDT

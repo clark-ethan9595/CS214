@@ -1,0 +1,21 @@
+# Penguin.rb | Defines the Penguin class which inherits attributes and methods
+#   from the WalkingBird superclass.
+#
+# Created by: Ethan Clark Project10
+# Date: April 26, 2016
+####################################################
+
+require './WalkingBird.rb'
+
+class Penguin < WalkingBird
+
+	######################################################
+	# call returns the sound that a Penguin type makes   #
+	# Recieve: NONE                                      #
+	# Return: Huh-huh-huh-huuuuuuh!, a String            #
+	######################################################
+	def call
+		"Huh-huh-huh-huuuuuuuuh!"
+	end
+
+end

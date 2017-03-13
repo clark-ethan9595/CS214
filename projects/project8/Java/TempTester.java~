@@ -1,0 +1,17 @@
+/* A class to test the Temperature class
+ * Created by: Ethan Clark
+ * Date: April 12, 2016
+ *
+ */
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.Scanner;
+
+
+public class TemperatureTest  // a class used for JUnit testing...
+{
+
+}
+
+

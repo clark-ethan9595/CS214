@@ -1,0 +1,467 @@
+Script started on Thu 31 Mar 2016 08:21:29 AM EDT
+elc3@sutherland:~/Documents/214/code/projects/project6$ cat ArrayProcessing.java [Aelc3@sutherland:~/Documents/214/code/projects/project6$ cat ArrayProcessing.jav[Ka
+/* ArrayProcessing.java is a driver for printArray() and readArray()
+ * Created by: Ethan Clark Project6
+ * Date: 3/30/2016
+ * Precondition: theArray, is an array of double values
+ * Output: each value in the array
+ ***************************************************************/
+
+import java.util.Scanner;
+
+public class ArrayProcessing
+{
+  public static void main(String[] args)
+    {
+	// Create a new Scanner for receiving and printing to the user
+	Scanner keyboard = new Scanner(System.in);
+	System.out.println("Enter the size of the array: ");
+	
+	// Read in the size of the array from the user
+	int size = keyboard.nextInt();
+
+	// Create an array the size that the user gave
+	double[] theArray = new double[size];
+
+	// Call readArray to fill the array, printArray to output the array
+	readArray(theArray, size, keyboard);
+	printArray(theArray, size, keyboard);
+    }
+  
+
+  /* readArray() is a method that reads in user doubles for an array
+   * Receive: theArray, an array of doubles; size, the size of the array
+   * Output: theArray is filled with double values from the user
+   ********************************************************************/
+   public static void readArray(double[] theArray, int size, Scanner keyboard) {
+
+	System.out.println("Please enter " + size + " values for the array: ");
+
+	// Read in values to fill up theArray with doubles
+	for (int i = 0; i < size; i++) {
+		theArray[i] = keyboard.nextDouble();
+	}
+   }
+
+  
+  /* printArray() is a method that prints the values in an array
+   * Receive: theArray, an array of doubles; size, the size of the array
+   * Output: each value in the array is printed to the user
+   *********************************************************************/
+   public static void printArray(double[] theArray, int size, Scanner keyboard) {
+
+	System.out.println("\nYour array contains the following values: ");
+
+	// Print out each value in the array
+	for (int i = 0; i < size; i++) {
+		System.out.println(theArray[i]);
+	}
+   }
+}
+elc3@sutherland:~/Documents/214/code/projects/project6$ javac Arraypro   p[r   Processing.a ja va
+elc3@sutherland:~/Documents/214/code/projects/project6$ java ArrayProcessing
+Enter the size of the array: 
+5
+Please enter 5 values for the array: 
+1
+2
+3
+4
+5
+
+Your array contains the following values: 
+1.0
+2.0
+3.0
+4.0
+5.0
+elc3@sutherland:~/Documents/214/code/projects/project6$ java ArrayProcessing
+Enter the size of the array: 
+3
+Please enter 3 values for the array: 
+4
+6
+9
+
+Your array contains the following values: 
+4.0
+6.0
+9.0
+elc3@sutherland:~/Documents/214/code/projects/project6$ java ArrayProcessing
+Enter the size of the array: 
+8
+Please enter 8 values for the array: 
+1
+1
+1
+1
+2
+2
+2
+2
+
+Your array contains the following values: 
+1.0
+1.0
+1.0
+1.0
+2.0
+2.0
+2.0
+2.0
+elc3@sutherland:~/Documents/214/code/projects/project6$ exit
+
+Script done on Thu 31 Mar 2016 08:22:29 AM EDT
+Script started on Thu 31 Mar 2016 08:23:43 AM EDT
+elc3@sutherland:~/Documents/214/code/projects/project6$ cat arrayprocessing.adb
+-- arrayprocessing.adb "test-drives" functions printArray and readArray
+-- Precondition: theArray is an array of doubles from the user
+-- Output: each value in the array is printed to the user
+--
+-- Created by: Ethan Clark Project6
+-- Date: 3/30/2016
+-----------------------------------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;                  -- Put(String)
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;      -- Put(Float)
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;  -- Put(Integer)
+
+procedure arrayprocessing is
+
+	-- declare the Vector array type
+	type Vector is array (Positive range <>) of Float;
+	
+	-- declare the integer size to be prompted to the user
+	size: Integer;
+
+	---------------------------------------------------------------------
+	-- printArray() prints out each element in the array to the user   --
+	-- Receive: A, a Vector array type with Floats in it already       --
+	-- Output: each element from A is printed for the user to see      --
+	---------------------------------------------------------------------
+	procedure printArray(A: Vector) is
+	
+		begin
+			-- Let the user know they are about to see the elements
+				-- from the array
+			Put("Here are the elements in the array: ");
+			New_Line;
+
+			-- For loop to write out each element
+			for i in Integer range A'First .. A'Last loop
+				Put( A(i) );
+				New_Line;
+			end loop;
+
+		end printArray;
+
+	---------------------------------------------------------------------------
+	-- readArray() fills in the array with floats from the user              --
+	-- Receive: A, an empty Vector array type; size, Integer size of  array  --
+	-- Output: A is filled with the values from the user                     --
+	---------------------------------------------------------------------------
+	procedure readArray(A: out Vector; size: Integer) is
+
+		element: Float;
+
+		begin
+			-- Prompt the user to enter floats for the array
+			Put("Please enter the array doubles: ");
+			New_Line;
+
+			-- For loop to get the element and put it in the array
+			for i in A'Range loop
+				Get(element);
+				A(i) := element;
+			end loop;
+
+			New_Line;
+
+		end readArray;
+
+begin
+	-- Prompt for and receive the size of the array from the user
+	Put("Please give the size of the array: ");
+	Get(size);
+	New_Line;
+
+	-- Declare our array of size from the user
+	declare
+		array1 : Vector(1 .. size);
+
+	begin
+		-- Call procedures readArray() and printArray()
+		readArray(array1, size);
+		printArray(array1);
+	end;
+
+end arrayprocessing;
+elc3@sutherland:~/Documents/214/code/projects/project6$ gnatmake arrya  ayprocessing
+gcc-4.6 -c arrayprocessing.adb
+gnatbind -x arrayprocessing.ali
+gnatlink arrayprocessing.ali
+elc3@sutherland:~/Documents/214/code/projects/project6$ ./arry ayprocessing
+Please give the size of the array: 5
+
+Please enter the array doubles: 
+1
+2
+3
+4
+5
+
+Here are the elements in the array: 
+ 1.00000E+00
+ 2.00000E+00
+ 3.00000E+00
+ 4.00000E+00
+ 5.00000E+00
+elc3@sutherland:~/Documents/214/code/projects/project6$ ./arrayprocessing
+Please give the size of the array: 8
+
+Please enter the array doubles: 
+1
+4
+3
+9
+0
+4
+7
+8
+
+Here are the elements in the array: 
+ 1.00000E+00
+ 4.00000E+00
+ 3.00000E+00
+ 9.00000E+00
+ 0.00000E+00
+ 4.00000E+00
+ 7.00000E+00
+ 8.00000E+00
+elc3@sutherland:~/Documents/214/code/projects/project6$ ./arrayprocessing
+Please give the size of the array: 2
+
+Please enter the array doubles: 
+100
+456
+
+Here are the elements in the array: 
+ 1.00000E+02
+ 4.56000E+02
+elc3@sutherland:~/Documents/214/code/projects/project6$ exit
+
+Script done on Thu 31 Mar 2016 08:28:12 AM EDT
+Script started on Thu 31 Mar 2016 08:45:32 AM EDT
+elc3@sutherland:~/Documents/214/code/projects/project6$ cat arrayprocessing..el   el
+;;; arrayprocessing.el reads and fills an array with doubles
+;;;    from the user input
+;;; Receive: doubles from the user to fill the array as well as
+;;;          the size of the array
+;;;
+;;; Created by: Ethan Clark Project6
+;;; Date: 3/30/2016
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; printArray() prints out the elements in the vector to the user                     ;;;
+;;; Receive: theArray, an array filled with values; count, int to keep track of index  ;;;
+;;; Output: each element in the array is printed for the user to see                   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun printArray(theArray count)
+  (if (vectorp theArray)   ; check to make sure theArray is a vector
+      (if (< count (length theArray))    ; if count is less than the length of the array
+	  (progn
+	   (print (elt theArray count))   ; output the element in the array to the user
+	   (printArray theArray (+ count 1)))))) ; call printArray recursively
+printArray
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; readArray() reads in elements from the user and fills them in theArray             ;;;
+;;; Receive: theArray, an array filled with values; count, int to keep track of index; ;;;
+;;;          and size, the int size of the array                                       ;;;
+;;; Output: theArray filled with the value from the user                               ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun readArray(theArray count size)
+  (if (vectorp theArray)  ; Make sure theArray is actually a vector
+      (if (< count size)  ; check to make sure count is less than size of the array
+	  (progn
+	   (setq element (read))   ; read in the input from the user
+	   (aset theArray count element)  ; append element to theArray
+	   (readArray theArray (+ count 1) size))))) ; recursively call readArray
+readArray
+
+(defun main(size)
+  (interactive "nEnter the size of the array: ") ; prompt the user for the size of the array
+  (setq anArray (make-vector size '0))           ; make an array with the user given size
+  (readArray anArray 0 size)                     ; call functions readArray() and printArray()
+  (printArray anArray 0))
+main
+
+(main 5)
+
+1
+
+2
+
+3
+
+4
+
+5
+nil
+
+(main 2)
+
+45
+
+60
+nil
+
+(main 10)
+
+1
+
+1
+
+1
+
+67
+
+89
+
+444
+
+35
+
+6
+
+7
+
+8
+nil
+
+
+elc3@sutherland:~/Documents/214/code/projects/project6$ exit
+
+Script done on Thu 31 Mar 2016 08:45:40 AM EDT
+Script started on Thu 31 Mar 2016 08:28:19 AM EDT
+elc3@sutherland:~/Documents/214/code/projects/project6$ cat arrayprocessing.rb
+# arrayprocessing.rb fills an array and prints out the values in it
+# Precondition: theArray is an array of doubles
+# Output: theArray filled with user input doubles
+#
+# Craeted by: Ethan Clark Project6
+# Date: 3/30/2016
+####################################################################
+
+####################################################################
+# function printArray() prints each value in the array             #
+# Receive: anArray, array of doubles; size, int length of array    #
+# Output: each double is printed to the user                       #
+####################################################################
+def printArray (anArray, size)
+
+	# Let the user know each of the elements in the array
+	print "\nThe elements in the array are: \n"
+
+	# For loop that loops through each element in the array
+	for i in 0..size
+		print anArray[i]
+		print "\n"
+	end
+
+end
+
+########################################################################
+# function readArray() reads input from the user and fills the array   #
+# Receive: anArray, array of doubles; size, int length of array        #
+# Output: anArray filled with doubles from the user                    #
+########################################################################
+def readArray (anArray, size)
+
+	# Ask the user to start entering values for the array
+	print "\nPlease enter #{size.to_i} values for the array: \n"
+
+	#For loop to put the user input into the array
+	for i in 0..size-1
+		element = gets.chomp.to_f
+		anArray[i] = element
+	end
+end
+
+# function main() is the driver for the readArray and printArray functions
+def main
+
+	# Ask for and receive the size of the array
+	print "\nEnter the size of the array: "
+	size = gets.chomp.to_f
+
+	# Create a new array with size from the user
+	array = Array.new(size)
+
+	# Call readArray() and then printArray()
+	readArray(array, size)
+	printArray(array, size)
+
+end
+
+main
+elc3@sutherland:~/Documents/214/code/projects/project6$ ruby arrayprocessing.rb
+
+Enter the size of the array: 5
+
+Please enter 5 values for the array: 
+1
+2
+3
+4
+5
+
+The elements in the array are: 
+1.0
+2.0
+3.0
+4.0
+5.0
+
+elc3@sutherland:~/Documents/214/code/projects/project6$ ruby arrayprocessing.rb
+
+Enter the size of the array: 8
+
+Please enter 8 values for the array: 
+1
+1
+5
+6
+99
+0
+34
+5
+
+The elements in the array are: 
+1.0
+1.0
+5.0
+6.0
+99.0
+0.0
+34.0
+5.0
+
+elc3@sutherland:~/Documents/214/code/projects/project6$ ruby arrayprocessing.rb
+
+Enter the size of the array: 2
+
+Please enter 2 values for the array: 
+10000
+345
+
+The elements in the array are: 
+10000.0
+345.0
+
+elc3@sutherland:~/Documents/214/code/projects/project6$ exit
+
+Script done on Thu 31 Mar 2016 08:28:57 AM EDT

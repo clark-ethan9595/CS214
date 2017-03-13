@@ -1,0 +1,56 @@
+# arrayprocessing.rb fills an array and prints out the values in it
+# Precondition: theArray is an array of doubles
+# Output: theArray filled with user input doubles
+#
+# Craeted by: Ethan Clark Project6
+# Date: 3/30/2016
+####################################################################
+
+####################################################################
+# function printArray() prints each value in the array             #
+# Receive: anArray, array of doubles; size, int length of array    #
+# Output: each double is printed to the user                       #
+####################################################################
+def printArray (anArray, size)
+
+	# Let the user know each of the elements in the array
+	print "\nThe elements in the array are: \n"
+
+	# For loop that loops through each element in the array
+	for i in 0..size
+		print anArray[i]
+		print "\n"
+	end
+
+end
+
+########################################################################
+# function readArray() reads input from the user and fills the array   #
+# Receive: anArray, array of doubles; size, int length of array        #
+# Output: anArray filled with doubles from the user                    #
+########################################################################
+def readArray (anArray, size)
+
+	# Ask the user to start entering values for the array
+	print "\nPlease enter #{size.to_i} values for the array: \n"
+
+	#For loop to put the user input into the array
+	for i in 0..size-1
+		element = gets.chomp.to_f
+		anArray[i] = element
+	end
+end
+
+def main
+
+	print "\nEnter the size of the array: "
+	size = gets.chomp.to_f
+
+	array = Array.new(size)
+
+	readArray(array, size)
+	printArray(array, size)
+
+end
+
+main

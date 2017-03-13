@@ -1,0 +1,5 @@
+Because Java is module based, we already did this last week!
+
+So, you can copy your lab07 (or proj07 if you already have it 
+finished) files into this directory for completeness, or just leave 
+it empty. There is nothing to submit from Java for this lab!

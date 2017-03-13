@@ -1,0 +1,828 @@
+Script started on Tue 19 Apr 2016 08:26:07 PM EDT
+elc3@goldberg:~/Documents/214/code/09/java$ cat Max.java
+/* Max.java uses the Java Collection Framework
+ * to explore operations on a linked list
+ *
+ * Begun By: Serita Nelesen
+ * Completed By: Ethan Clark Project9
+ * Date: April 19, 2016
+ */
+
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.Collections;
+
+// class Max uses operations on a LinkedList
+class Max{
+
+    /****************************************************************************
+    * print(aList) receives a linked list and prints out the integers within in *
+    * Receive: aList, a LinkedList of integers                                  *
+    * Output: each integer in the list is outputted to the user                 *
+    ****************************************************************************/
+    public static void print(LinkedList<Integer> aList)
+    {
+	Iterator<Integer> listIterator = aList.iterator();
+	while(listIterator.hasNext())
+	{
+		System.out.print(listIterator.next() + " ");
+	}
+	System.out.print('\n');
+    }
+    
+    /*****************************************************************************
+    * search(aList, element) searches for and returns index of element in aList  *
+    * Receive: LinkedList, aList; int, element                                   *
+    * Return: index of element in aList, else -1 if not in aList                 *
+    *****************************************************************************/
+    public static int search(LinkedList<Integer> aList, int element)
+    {
+	int index = 0;
+	Iterator<Integer> listIterator = aList.iterator();
+	while(listIterator.hasNext())
+	{
+		if (aList.get(index) == element)
+			return index;
+		else
+		{
+			index += 1;
+			listIterator.next();
+		}
+	}
+	return -1;
+    }
+    
+    public static void main(String [] args){
+
+	// Declare and allocate storage for three new lists
+	LinkedList<Integer> list1 = new LinkedList<Integer>();
+	LinkedList<Integer> list2 = new LinkedList<Integer>();
+	LinkedList<Integer> list3 = new LinkedList<Integer>();
+	LinkedList<Integer> list4 = new LinkedList<Integer>();
+
+	
+	list1.add(new Integer(99)); // max is first
+	list1.add(new Integer(88)); // 99 88 77 66 55
+	list1.add(new Integer(77));
+	list1.add(new Integer(66));
+	list1.add(new Integer(55));
+
+	list2.add(55);  // max is last
+	list2.add(66);  // uses implicit type conversion of int
+	list2.add(77);  //     to Integer
+	list2.add(88);  // 55 66 77 88 99
+	list2.add(99);
+
+	list3.add(55);  // max is in the middle
+	list3.add(77);  // implicit type conversion
+	list3.add(99);  // 55 77 99 88 66 
+	list3.add(88);
+	list3.add(66);
+
+	list4.add(44);  // List where 99 is not in the list
+	list4.add(55);
+	list4.add(66);
+	list4.add(77);
+	list4.add(88);
+
+	print(list1);
+	print(list2);
+	print(list3);
+	print(list4);
+
+	// Print out the max of each of the three lists
+	System.out.println("Max of list1: " + Collections.max(list1));
+	System.out.println("Max of list2: " + Collections.max(list2));
+	System.out.println("Max of list3: " + Collections.max(list3));
+	System.out.println("Max of list4: " + Collections.max(list4));
+
+	// Search for the element 99 in each of the four lists
+	System.out.println("Element 99 is in position " + search(list1, 99) + " in list1.");
+	System.out.println("Element 99 is in position " + search(list2, 99) + " in list2.");
+	System.out.println("Element 99 is in position " + search(list3, 99) + " in list3.");
+	System.out.println("Element 99 is in position " + search(list4, 99) + " in list4.");
+    
+    }
+}
+elc3@goldberg:~/Documents/214/code/09/java$ javac Max.java
+elc3@goldberg:~/Documents/214/code/09/java$ java Max
+99 88 77 66 55 
+55 66 77 88 99 
+55 77 99 88 66 
+44 55 66 77 88 
+Max of list1: 99
+Max of list2: 99
+Max of list3: 99
+Max of list4: 88
+Element 99 is in position 0 in list1.
+Element 99 is in position 4 in list2.
+Element 99 is in position 2 in list3.
+Element 99 is in position -1 in list4.
+elc3@goldberg:~/Documents/214/code/09/java$ exit
+
+Script done on Tue 19 Apr 2016 08:26:22 PM EDT
+Script started on Tue 19 Apr 2016 08:26:32 PM EDT
+elc3@goldberg:~/Documents/214/code/09/ada$ cat list_package.adb s
+-- list_package.ads declares an Ada linked list and its operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Ethan Clark Project9
+-- Date: April 19, 2016
+------------------------------------------------------------------
+
+package List_Package is
+
+  -- the list-type itself (public)
+  type List is private;
+
+  -----------------------------------------------------
+  -- Initialize a list                                -
+  -- Receive: aList, a List.                          -
+  -- Pre: aList is uninitialized.                     -
+  -- Post: aList%itsFirst == aList%itsLast == NULL && -
+  --        aList%itsLength == 0.                     -
+  -----------------------------------------------------
+  procedure Init(A_List: out List);
+
+
+  ------------------------------------------------
+  -- Is a list empty?                            -
+  -- Receive: aList, a List.                     -
+  -- Return: true, iff aList contains no values. -
+  ------------------------------------------------
+  function Empty(A_List: in List) return Boolean;
+
+  -------------------------------------
+  -- How many values are in a list?   -
+  -- Receive: aList, a List.          -
+  -- Return: aList%itsLength.         -
+  -------------------------------------
+  function Length(A_List : in List) return Integer;
+
+
+  ----------------------------------------
+  -- Append a value to a list.           -
+  -- Receive: aValue, an integer,        -
+  -- Passback: aList, containing aValue. -
+  ----------------------------------------
+  procedure Append(A_Value : in Integer; A_List: in out List);
+
+
+  -------------------------------------
+  -- Display the values in a list.    -
+  -- Receive: aList, a List.          -
+  -- Output: the values in aList.     -
+  -------------------------------------
+  procedure Put(A_List : in List);
+
+  ---------------------------------------
+  -- Find the maximum value in a list.  -
+  -- Receive: aList, a List.            -
+  -- Return: the maximum value in aList.-
+  ---------------------------------------
+  function Max(A_List: in List) return Integer;
+
+  ------------------------------------------------------------------------------------
+  -- Search(aList, element) searches for element in aList and returns its position  --
+  -- Receive: aList, a List; element, an integer                                    --
+  -- PRE: aList has already been defined                                            --
+  -- Return: integer index/position of element in aList; -1 if not in aList         --
+  ------------------------------------------------------------------------------------
+  function Search(aList: in List; element: in Integer) return Integer;
+
+ private
+
+   -- Place the declaration of List_Node here to use in the Node_Ptr declaration
+   type List_Node;
+
+   -- Declare the Node_Ptr type
+   type Node_Ptr is access List_Node;
+
+   -- Declare the List_Node type with Its_Value and Its_Next
+   type List_Node is record
+	Its_Value : Integer;
+	Its_Next : Node_Ptr;
+   end record;
+
+   -- Declare the List type with Its_First, Its_Last, and Its_Length
+   type List is record
+	Its_First : Node_Ptr;
+	Its_Last : Node_Ptr;
+	Its_Length : Integer;
+   end record;
+
+end List_Package;
+
+elc3@goldberg:~/Documents/214/code/09/ada$ cat list_package.adb
+-- list_package.adb defines Ada linked list operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Ethan Clark Project9
+-- Date: April 19, 2016
+-------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use Ada.Text_IO, Ada.Integer_Text_IO;
+
+package body List_Package is
+
+  -----------------------------------------------------
+  -- Initialize a list                                -
+  -- Receive: aList, a List.                          -
+  -- Pre: aList is uninitialized.                     -
+  -- Post: aList%itsFirst == aList%itsLast == NULL && -
+  --        aList%itsLength == 0.                     -
+  -----------------------------------------------------
+  procedure Init(A_List : out List) is
+  begin
+    A_List.Its_First := null;
+    A_List.Its_Last := null;
+    A_List.Its_Length := 0;
+  end Init;
+
+  ------------------------------------------------
+  -- Is a list empty?                            -
+  -- Receive: aList, a List.                     -
+  -- Return: true, iff aList contains no values. -
+  ------------------------------------------------
+  function Empty(A_List : in List) return Boolean is
+  begin
+    return A_List.Its_Length = 0;
+  end Empty;
+
+  -------------------------------------
+  -- How many values are in a list?   -
+  -- Receive: aList, a List.          -
+  -- Return: aList%itsLength.         -
+  -------------------------------------
+  function Length(A_List : in List) return Integer is
+  begin
+    return A_List.Its_Length;
+  end Length;
+
+  ----------------------------------------
+  -- Append a value to a list.           -
+  -- Receive: aValue, an integer,        -
+  -- Passback: aList, containing aValue. -
+  ----------------------------------------
+  procedure Append(A_Value : in Integer; A_List : in out List) is
+    Temp_Ptr : constant Node_Ptr := new List_Node;
+  begin
+    Temp_Ptr.Its_Value := A_Value;
+    Temp_Ptr.Its_Next := null;
+
+    if A_List.Its_Length = 0 then
+       A_List.Its_First := Temp_Ptr;
+    else
+       A_List.Its_Last.Its_Next := Temp_Ptr;
+    end if;
+
+    A_List.Its_Last := Temp_Ptr;
+
+    A_List.Its_Length := A_List.Its_Length + 1;
+  end Append;
+
+  -------------------------------------
+  -- Display the values in a list.    -
+  -- Receive: aList, a List.          -
+  -- Output: the values in aList.     -
+  -------------------------------------
+
+  procedure Put(A_List: in List) is
+
+  -- Declare Temp_Ptr before the procedure begins
+  Temp_Ptr: Node_Ptr := A_List.Its_First;
+
+  begin
+
+	-- While Temp_Ptr is not null (has not reached end of A_List)
+	while Temp_Ptr /= null loop
+
+		-- Output the Value of the Temp_Ptr
+		Put(' '); Put(Temp_Ptr.Its_Value);
+
+		-- Update to the next Ptr/element in A_List
+		Temp_Ptr := Temp_Ptr.Its_Next;
+
+	end loop;
+
+  end Put;
+
+  ---------------------------------------
+  -- Find the maximum value in a list.  -
+  -- Receive: aList, a List.            -
+  -- PRE: aList is not empty            -
+  -- Return: the maximum value in aList.-
+  ---------------------------------------
+
+  function Max(A_List: in List) return Integer is
+
+  -- Declare Temp_Ptr, Max_Int before the function begins
+  Temp_Ptr: Node_Ptr := A_List.Its_First;
+  Max_Int: Integer := -99999999;
+
+  begin
+
+	-- While Temp_Ptr is not null (has not reached end of A_List)
+	while Temp_Ptr /= null loop
+
+		-- If the Temp_Ptr Value is bigger than our current Max_Int value
+		if Temp_Ptr.Its_Value > Max_Int then
+
+			-- Make the Temp_Ptr value the new Max_Int
+			Max_Int := Temp_Ptr.Its_Value;
+
+		end if;
+
+		-- Updated to the next Ptr/element in the List
+		Temp_Ptr := Temp_Ptr.Its_Next;
+
+	end loop;
+
+	-- Return the Max_Int
+	return Max_Int;
+
+  end Max;
+
+  ------------------------------------------------------------------------------------
+  -- Search(aList, element) searches for element in aList and returns its position  --
+  -- Receive: aList, a List; element, an integer                                    --
+  -- PRE: aList has already been defined                                            --
+  -- Return: integer index/position of element in aList; -1 if not in aList         --
+  ------------------------------------------------------------------------------------
+
+  function Search(aList: in List; element: in Integer) return Integer is
+
+  Temp_Ptr: Node_Ptr := aList.Its_First;
+  index: Integer := 0;
+
+  begin
+
+	while Temp_Ptr /= null loop
+		
+		if Temp_Ptr.Its_Value = element then
+			return index;
+		else
+			index := index + 1;
+			Temp_Ptr := Temp_Ptr.Its_Next;
+		end if;
+	end loop;
+
+	return -1;
+  end Search;
+
+end List_Package;
+
+elc3@goldberg:~/Documents/214/code/09/ada$ cat max.adb
+-- max.adb finds the max of a list of integers. 
+-- 
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Ethan Clark Project9
+-- Date: April 19, 2016
+-------------------------------------------------- 
+ 
+with Ada.Text_IO, Ada.Integer_Text_IO, List_Package; 
+use Ada.Text_IO, Ada.Integer_Text_IO, List_Package; 
+ 
+procedure Max is 
+                              -- define 3 lists 
+  List1, List2, List3, List4 : List; 
+  --Temp_Ptr : Node_Ptr;	-- Experiment testing
+ 
+begin 
+  Init(List1);                -- initialize them 
+  Init(List2); 
+  Init(List3);
+  Init(List4); 
+ 
+  Append(99, List1);          -- 99, 88, 77, 66, 55 
+  Append(88, List1);          -- max is first 
+  Append(77, List1); 
+  Append(66, List1); 
+  Append(55, List1); 
+ 
+  Append(55, List2);          -- 55, 66, 77, 88, 99 
+  Append(66, List2);          -- max is last 
+  Append(77, List2); 
+  Append(88, List2); 
+  Append(99, List2); 
+ 
+  Append(55, List3);          -- 55, 77, 99, 88, 66 
+  Append(77, List3);          -- max is in the middle 
+  Append(99, List3); 
+  Append(88, List3); 
+  Append(66, List3);
+
+  Append(44, List4);          -- 44, 55, 66, 77, 88
+  Append(55, List4);          -- no element 99
+  Append(66, List4);
+  Append(77, List4);
+  Append(88, List4);
+ 
+  Put(List1); New_Line;       -- output the 4 lists 
+  Put(List2); New_Line; 
+  Put(list3); New_Line; 
+  Put(list4); New_Line;
+
+                              -- display their maxima 
+  Put("The maximum value in list 1 is ");  Put( Max(List1) ); New_Line; 
+  Put("The maximum value in list 2 is ");  Put( Max(List2) ); New_Line; 
+  Put("The maximum value in list 3 is ");  Put( Max(List3) ); New_Line; 
+  Put("The maximum value in list 4 is ");  Put( Max(List4) ); New_Line;
+
+				-- Display the location of element 99
+  Put("List1 has element 99 in position "); Put( Search(List1, 99) ); New_Line;
+  Put("List2 has element 99 in position "); Put( Search(List2, 99) ); New_Line;
+  Put("List3 has element 99 in position "); Put( Search(List3, 99) ); New_Line;
+  Put("List4 has element 99 in position "); Put( Search(List4, 99) ); New_Line;
+
+end Max; 
+
+elc3@goldberg:~/Documents/214/code/09/ada$ gan  ntame   a  atmake max.adb
+gcc-4.8 -c max.adb
+gcc-4.8 -c list_package.adb
+gnatbind -x max.ali
+gnatlink max.ali
+elc3@goldberg:~/Documents/214/code/09/ada$ ./max
+          99          88          77          66          55
+          55          66          77          88          99
+          55          77          99          88          66
+          44          55          66          77          88
+The maximum value in list 1 is          99
+The maximum value in list 2 is          99
+The maximum value in list 3 is          99
+The maximum value in list 4 is          88
+List1 has element 99 in position           0
+List2 has element 99 in position           4
+List3 has element 99 in position           2
+List4 has element 99 in position          -1
+elc3@goldberg:~/Documents/214/code/09/ada$ exit
+
+Script done on Tue 19 Apr 2016 08:26:53 PM EDT
+;;; max.el searches a list for its maximum value.
+;;;
+;;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;;; Completed by: Ethan Clark Project9
+;;; Date: April 19, 2016
+
+(add-to-list 'load-path ".")             ; setup load-path to WD
+("." "/usr/share/emacs24/site-lisp/a2ps" "/etc/emacs24" "/etc/emacs" "/usr/local/share/emacs/24.3/site-lisp" "/usr/local/share/emacs/site-lisp" "/usr/share/emacs24/site-lisp/dictionaries-common" "/usr/share/emacs/site-lisp/autoconf" "/usr/share/emacs/24.3/site-lisp" "/usr/share/emacs/site-lisp" "/usr/share/emacs/24.3/lisp" "/usr/share/emacs/24.3/lisp/vc" ...)
+
+
+
+(load "mylist.elc")                      ; load module
+t
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; test function Max. ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(progn
+  (let
+      ((buf (get-buffer "max.el"))       ; setup for output
+       (list1 (list 99 88 77 66 55))     ; max is first
+       (list2 (list 55 66 77 88 99))     ; max is last
+       (list3 (list 55 77 99 88 66))     ; max in middle
+       (list4 (list 55 66 77 88 44)))    ; no 99 in list
+
+    (princ list1 buf)                    ; print list1
+    (terpri buf)                         ;  and a newline
+
+    (princ list2 buf)                    ; print list2
+    (terpri buf)                         ;  and a newline
+
+    (princ list3 buf)                    ; print list3
+    (terpri buf)                         ;  and a newline
+  
+    (princ "The max in list 1 is " buf)  ; print the max
+    (princ (Max list1) buf)              ;  in list1
+    (terpri buf)                         ;  and a newline
+    (princ "The max in list 2 is " buf)  ; print the max
+    (princ (Max list2) buf)              ;  in list2
+    (terpri buf)                         ;  and a newline
+    (princ "The max in list 3 is " buf)  ; print the max
+    (princ (Max list3) buf)              ;  in list3
+    (terpri buf)                         ;  and a newline
+    
+    (princ "The max in list 4 is " buf)  ; print the max
+    (princ (Max list4) buf)              ;   in list4
+    (terpri buf)                         ;   and a newline
+
+    (princ "The element 99 in list 1 is in index " buf)
+    (princ (Search list1 99) buf)
+    (terpri buf)
+
+    (princ "The element 99 in list 2 is in index " buf)
+    (princ (Search list2 99) buf)
+    (terpri buf)
+
+    (princ "The element 99 in list 3 is in index " buf)
+    (princ (Search list3 99) buf)
+    (terpri buf)
+
+    (princ "The element 99 in list 4 is in index " buf)
+    (princ (Search list4 99) buf)
+    (terpri buf)))
+(99 88 77 66 55)
+(55 66 77 88 99)
+(55 77 99 88 66)
+The max in list 1 is 99
+The max in list 2 is 99
+The max in list 3 is 99
+The max in list 4 is 88
+The element 99 in list 1 is in index 0
+The element 99 in list 2 is in index 4
+The element 99 in list 3 is in index 2
+The element 99 in list 4 is in index -1
+t
+
+
+
+
+
+
+
+
+
+
+
+;;; mylist.el is a "module" of list operations.
+;;;
+;;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;;; Completed by: Ethan Clark Project9
+;;; Date: April 19, 2016
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Max2 finds the maximum of two values.       ;;
+;;; Receive: val1, val2, two values.            ;;
+;;; PRE: val1 and val2 can be compared using <. ;;
+;;; Return: the maximum of val1 and val2.       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun Max2 (val1 val2)
+  (if (> val1 val2)
+      val1
+    val2))
+Max2
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Max finds the maximum value in a list.         ;;
+;;; Receive: aList, a list of values.              ;;
+;;; PRE: values in aList can be compared using <.  ;;
+;;; Return: the maximum value in aList.            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun Max (aList)
+  (if (listp aList)
+      (progn
+        (if (equal (length aList) 0) nil
+	(if (equal (length aList) 1)
+	  (car aList)
+	(Max2 (car aList) (Max (cdr aList))))))
+    nil))
+Max
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Search determines if the length of the list is 0       ;;
+;;; Receive: aList, a list of values; element, an integer  ;;
+;;; PRE: values in aList have already been declared        ;;
+;;; Return: the index of the element in aList              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun Search (aList element)
+  (setq index 0)
+  (if (listp aList)
+      (progn
+        (if (equal (length aList) 0) -1
+	  (Search_List aList element 0)))
+    nil))
+Search
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Search_List determines where, if at all, element is in index  ;;
+;;; Receive: aList, a list of values; element and index, integers ;;
+;;; PRE: values in aList have already been declared               ;;
+;;; Return: the index of the element in aList; otherwise -1       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun Search_List (aList element index)
+  (if (equal (car aList) element) index
+  (if (equal (length aList) 0) -1
+    (Search_List (cdr aList) element (+ index 1)))))
+Search_List
+
+
+
+;ELC   
+;;; Compiled by elc3@hollerith.cs.calvin.edu on Thu Apr 21 19:38:50 2016
+;;; from file /home/elc3/Documents/214/code/09/e-lisp/mylist.el
+;;; in Emacs version 24.3.1
+;;; with all optimizations.
+
+;;; This file uses dynamic docstrings, first added in Emacs 19.29.
+
+;;; This file does not contain utf-8 non-ASCII characters,
+;;; and so can be loaded in Emacs versions earlier than 23.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defalias 'Max2 #[(val1 val2) "	V\203 \207	\207" [val1 val2] 2])
+(defalias 'Max #[(aList) "<\205 G\301\232?\205 G\302\232\203 @\207\303@\304A!\"\207" [aList 0 1 Max2 Max] 4])
+(defalias 'Search #[(aList element) "\303	<\205 	G\303\232\203 \304\207\305	\n\303#\207" [index aList element 0 -1 Search_List] 4])
+(defalias 'Search_List #[(aList element index) "@	\232\203	 \n\207G\303\232\203 \304\207\305A	\nT#\207" [aList element index 0 -1 Search_List] 4])
+Script started on Tue 19 Apr 2016 08:25:43 PM EDT
+elc3@goldberg:~/Documents/214/code/09/ruby$ cat List.rb
+# List.rb implements a linked list structure in Ruby.
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Ethan Clark Project9
+# Date: April 19, 2016
+#######################################################
+
+require 'test/unit/assertions'
+include Test::Unit::Assertions
+
+class List
+
+   #########################################################
+   ## initialize() creates an instance of our List Class  ##
+   ## Receive: NONE                                       ##
+   ## Output: first and last set to nil, length set to 0  ##
+   #########################################################
+   def initialize
+	@first = nil
+	@last = nil
+	@length = 0
+   end
+
+   # Accessor for the List length attribute
+   attr_reader :length
+
+   # Am I empty?
+   # Return: length == 0
+   def empty?
+      @length == 0
+   end
+  
+   # append a value to me
+   # Receive: value, the item to be appended
+   # Postcondition: my last item is value and
+   #                 my length is one more than it was
+   def append(value)
+      newNode = Node.new(value, nil)
+
+      if empty?
+         @first = newNode
+      else
+         @last.next = newNode      
+      end
+
+      @last = newNode
+      @length += 1
+      self
+   end
+
+   ################################################################
+   ## print outputs the items in the list to the user            ##
+   ## Receive: NONE                                              ##
+   ## PRE: List has already been defined                         ##
+   ## Output: each element in the List printed to the user       ##
+   ################################################################
+   def print
+	temp = @first
+	while !(temp.nil?)
+		printf " #{temp.value}"
+		temp = temp.next
+	end
+   end
+
+   ################################################################
+   ## max determines the maximum value in the List               ##
+   ## Receive: NONE                                              ##
+   ## PRE: List has already been defined                         ##
+   ## Return: maxValue, the maximum value in the List            ##
+   ################################################################
+   def max
+	temp = @first
+	maxValue = nil
+	if !temp.nil? then
+		maxValue = temp.value
+		temp = temp.next
+	end
+	while !temp.nil?
+		if temp.value > maxValue then
+			maxValue = temp.value
+		end
+		temp = temp.next
+	end
+	return maxValue
+   end
+
+   ######################################################################
+   ## search(element) determines if element is in the List             ##
+   ## Receive: element, an Integer                                     ##
+   ## PRE: List has already been defined                               ##
+   ## Return: Integer index of position of element, -1 if not in List  ##
+   ######################################################################
+   def search (element)
+	temp=@first
+	index = 0
+	while !temp.nil?
+		if temp.value == element then
+			return index
+		else
+			index = index + 1
+			temp = temp.next
+		end
+	end
+	return -1
+   end
+
+   # Define the Node Class within the List Class with its data and methods
+   class Node
+
+	# Initialize the Node item with item and link
+	def initialize(item, link)
+		@value = item
+		@next = link
+	end
+
+	# Define the accessor methods for the Node Class
+	attr_reader :value
+	attr_accessor :next
+
+   end
+
+end
+
+elc3@goldberg:~/Documents/214/code/09/ruby$ cat max.rb
+# max.rb tests a Ruby linked list.
+#
+# Begun by: Dr. Adams for CS 214 at Calvin College.
+# Completed by: Ethan Clark Project9
+# Date: April 19, 2016
+
+require './List'
+
+# Create four new lists with our List Class
+list1 = List.new
+list2 = List.new
+list3 = List.new
+list4 = List.new
+
+# Append all the necessary items to each List
+list1.append(99).append(88).append(77).append(66).append(55)
+list2.append(55).append(66).append(77).append(88).append(99)
+list3.append(55).append(77).append(99).append(88).append(66)
+list4.append(44).append(55).append(66).append(77).append(88)
+
+# Print out each list, find the maximum, and search for 99 in each list
+list1.print 
+puts
+puts "Maximum of list1: #{list1.max}"
+puts "List1 contains 99 in position: #{list1.search(99)}"
+puts
+
+list2.print 
+puts
+puts "Maximum of list2: #{list2.max}"
+puts "List2 contains 99 in position: #{list2.search(99)}"
+puts
+
+list3.print 
+puts
+puts "Maximum of list3: #{list3.max}"
+puts "List3 contains 99 in position: #{list3.search(99)}"
+puts
+
+list4.print
+puts
+puts "Maximum of list4: #{list4.max}"
+puts "List4 contains 99 in position: #{list4.search(99)}"
+puts
+
+
+elc3@goldberg:~/Documents/214/code/09/ruby$ ruby max.rb
+ 99 88 77 66 55
+Maximum of list1: 99
+List1 contains 99 in position: 0
+
+ 55 66 77 88 99
+Maximum of list2: 99
+List2 contains 99 in position: 4
+
+ 55 77 99 88 66
+Maximum of list3: 99
+List3 contains 99 in position: 2
+
+ 44 55 66 77 88
+Maximum of list4: 88
+List4 contains 99 in position: -1
+
+elc3@goldberg:~/Documents/214/code/09/ruby$ exit
+
+Script done on Tue 19 Apr 2016 08:25:57 PM EDT

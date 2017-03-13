@@ -1,0 +1,119 @@
+﻿<Window x:Class="MainWindow"
+        
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinalProject"
+        mc:Ignorable="d"
+        Title="Baseball Statistics" Height="768" Width="1127.5">
+
+    <Grid>
+
+        <Grid.Background>
+            <SolidColorBrush Color="Brown"/>
+        </Grid.Background>
+
+        <Button x:Name="Home_Player_button" Content="Enter Home Team Roster" HorizontalAlignment="Left" Margin="0,500,0,0" VerticalAlignment="Top" Width="217" Height="70" FontSize="18.667"/>
+        <Button x:Name="Away_Player_button" Content="Enter Away Team Roster" HorizontalAlignment="Left" Margin="222,500,0,0" VerticalAlignment="Top" Width="214" Height="70" FontSize="18.667"/>
+
+        <Button x:Name="Statistics" Content="Get Stats" Visibility="Hidden" HorizontalAlignment="Left" Margin="222,575,0,0" VerticalAlignment="Top" Width="214" Height="70" FontSize="18.667"/>
+
+        <Canvas HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="920">
+
+            <Canvas.Background>
+                <ImageBrush ImageSource="baseballDiamond.jpg" Stretch="Fill"/>
+            </Canvas.Background>
+
+            <Label x:Name="Hitting_Label" Content="Hit Options: " Canvas.Left="496" Canvas.Top="495" Width="146" Height="41" FontSize="24"/>
+            <Label x:Name="Pitching_Label" Content="Pitch Options: " Canvas.Left="642" Canvas.Top="495" Width="175" Height="41" FontSize="24"/>
+            <Label x:Name="Out_Label" Content="Out Options:" Canvas.Left="800" Canvas.Top="495" Width="174" Height="41" FontSize="24"/>
+            <Label x:Name="Instructions" Content="Please enter the teams' rosters first!" Canvas.Top="456" Width="307" Height="44" FontSize="18.667"/>
+            <Label x:Name="Instructions_Two" Content="Please choose only one radiobutton" Canvas.Left="693" Canvas.Top="418" Width="227" Height="34" FontSize="13.333"/>
+            <Label x:Name="Instructions_Two_Copy" Content="or select one player for an error -" Canvas.Left="706" Canvas.Top="437" Width="214" Height="34" FontSize="13.333"/>
+            <Label x:Name="Instructions_Two_Copy1" Content="and then click submit!" Canvas.Left="706" Canvas.Top="456" Width="154" Height="34" FontSize="13.333"/>
+
+        </Canvas>
+
+        <Label x:Name="Hitter_Label"  Canvas.Left="493" Canvas.Top="431" Foreground="Blue" FontSize="18.667" Margin="486,417,377,272"/>
+        <Label x:Name="First_Runner_Label" Content="" HorizontalAlignment="Left" Foreground="Blue" Margin="578,323,0,0" VerticalAlignment="Top" Width="144" Height="43" FontSize="18.667"/>
+        <Label x:Name="Second_Runner_Label" Content="" Canvas.Left="438" Canvas.Top="208" Height="42" FontSize="18.667" Foreground="Blue" Margin="420,194,543,501"/>
+        <Label x:Name="Third_Runner_Label" Content="" Canvas.Left="283" Canvas.Top="332" Width="166" Height="42" FontSize="18.667" Foreground="Blue" Margin="288,332,628,363"/>
+
+        <Label x:Name="Pitcher_Label" Canvas.Left="420" Canvas.Top="301" FontSize="18.667" Margin="402,307,509,371"/>
+        <Label x:Name="Catcher_Label" Canvas.Left="394" Canvas.Top="467" FontSize="18.667" Margin="376,446,509,237"/>
+        <Label x:Name="First_Base_Label" Canvas.Left="542" Canvas.Top="325" FontSize="18.667" Margin="573,288,360,397"/>
+        <Label x:Name="Second_Base_Label" Canvas.Left="493" Canvas.Top="238" FontSize="18.667" Margin="528,231,434,454"/>
+        <Label x:Name="Short_Stop_Label" Canvas.Left="342" Canvas.Top="238" FontSize="18.667" Margin="341,231,587,459"/>
+        <Label x:Name="Third_Base_Label" Canvas.Left="274" Canvas.Top="301" FontSize="18.667" Margin="272,283,646,410"/>
+        <Label x:Name="Right_Field_Label" Canvas.Left="644" Canvas.Top="158" FontSize="18.667" Margin="660,147,196,534"/>
+        <Label x:Name="Center_Field_Label" Canvas.Left="394" Canvas.Top="113" FontSize="18.667" Margin="420,65,417,609"/>
+        <Label x:Name="Left_Field_Label" Canvas.Left="167" Canvas.Top="158" FontSize="18.667" Margin="172,147,689,540"/>
+
+        <Label x:Name="Strike_Count" Canvas.Left="990" Canvas.Top="137" Width="71" Height="26" Margin="1011,133,0,570"/>
+        <Label x:Name="Ball_Count" Canvas.Left="990" Canvas.Top="168" Width="71" Height="26" Margin="1011,164,0,539"/>
+        <Label x:Name="Out_Count" Canvas.Left="995" Canvas.Top="199" Width="71" Height="26" Margin="1011,190,0,513"/>
+
+        <Button x:Name="displayHome" Content="Display Home Team" Visibility="Hidden" HorizontalAlignment="Left" Margin="0,650,0,0" VerticalAlignment="Top" Width="217" Height="74" FontSize="18.667" RenderTransformOrigin="-0.713,0.472"/>
+        <Button x:Name="displayAway" Content="Display Away Team" Visibility="Hidden" HorizontalAlignment="Left" Margin="222,650,0,0" VerticalAlignment="Top" Width="214" Height="74" FontSize="18.667" RenderTransformOrigin="-0.713,0.472"/>
+        <Button x:Name="start_game_button" Content="Start Game" Visibility="Hidden" HorizontalAlignment="Left" Margin="0,575,0,0" VerticalAlignment="Top" Width="217" Height="70" FontSize="18.667"/>
+
+        <Label x:Name="Home_Score_Label" Content="Home Score:" HorizontalAlignment="Left" Margin="916,49,0,0" VerticalAlignment="Top" Height="39" Width="152" FontSize="24"/>
+        <Label x:Name="Away_Score_Label" Content="Away Score:" HorizontalAlignment="Left" Margin="916,93,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label x:Name="Away_Count_Score" HorizontalAlignment="Left" Margin="1053,98,0,0" VerticalAlignment="Top" Height="34" Width="67" FontSize="18.667"/>
+        <Label x:Name="Home_Count_Score" FontSize="18.667" Margin="1054,52,0,641"/>
+        <Label x:Name="Inning_Count" HorizontalAlignment="Left" Margin="938,3,0,0" VerticalAlignment="Top" Height="44" Width="172" FontSize="24"/>
+
+        <RadioButton x:Name="Single_Hit" Content="Single" HorizontalAlignment="Left" Margin="495,537,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Double_Hit" Content="Double" HorizontalAlignment="Left" Margin="495,570,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Triple_Hit" Content="Triple" HorizontalAlignment="Left" Margin="495,603,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Home_Run" Content="Home Run" HorizontalAlignment="Left" Margin="495,636,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+
+        <Rectangle Stroke="Black" Margin="469,500,625,-3">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionTextColorKey}}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Label x:Name="Pitch_Count_Label" Content="Pitch Count:" HorizontalAlignment="Left" Margin="925,263,0,0" VerticalAlignment="Top" Height="42" Width="138" FontSize="24"/>
+        <Label x:Name="Home_Pitch_Count" HorizontalAlignment="Left" Margin="920,305,0,0" VerticalAlignment="Top" Width="166" Height="33" FontSize="18.667"/>
+        <Label x:Name="Away_Pitch_Count" HorizontalAlignment="Left" Margin="920,333,0,0" VerticalAlignment="Top" Width="166" Height="33" FontSize="18.667"/>
+
+        <Label x:Name="General_Info" HorizontalAlignment="Left" Margin="925,133,0,0" VerticalAlignment="Top" Height="98" Width="84" FontSize="18.667"/>
+
+        <RadioButton x:Name="Strike_Radio" Content="Strike" HorizontalAlignment="Left" Margin="640,537,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Ball_Radio" Content="Ball" HorizontalAlignment="Left" Margin="640,570,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Foul_Radio" Content="Foul Ball" HorizontalAlignment="Left" Margin="640,603,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+
+
+
+        <Rectangle HorizontalAlignment="Left" Height="27" Margin="920,236,0,0" Stroke="Black" VerticalAlignment="Top" Width="200">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionTextColorKey}}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <RadioButton x:Name="Ground_Out_Label" Content="Ground Out" HorizontalAlignment="Left" Margin="804,537,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Line_Out_Label" Content="Line Out" HorizontalAlignment="Left" Margin="804,570,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+        <RadioButton x:Name="Fly_Out_Label" Content="Fly Out" HorizontalAlignment="Left" Margin="804,603,0,0" VerticalAlignment="Top" Height="33" Width="120" FontSize="18.667" GroupName="Options"/>
+
+        <Button x:Name="Submit_Button" Content="SUBMIT" Visibility="Hidden" HorizontalAlignment="Left" Margin="691,660,0,0" VerticalAlignment="Top" Width="138" Height="48" FontSize="24"/>
+
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="957,588,0,0" VerticalAlignment="Top" Width="144" Height="48">
+            <ComboBoxItem Content="Pitcher" FontSize="24"/>
+            <ComboBoxItem Content="Catcher" FontSize="24"/>
+            <ComboBoxItem Content="First Baseman" FontSize="24"/>
+            <ComboBoxItem Content="Second Baseman" FontSize="24"/>
+            <ComboBoxItem Content="Third Baseman" FontSize="24"/>
+            <ComboBoxItem Content="Short Stop" FontSize="24"/>
+            <ComboBoxItem Content="Left Fielder" FontSize="24"/>
+            <ComboBoxItem Content="Center Fielder" FontSize="24"/>
+            <ComboBoxItem Content="Right Fielder" FontSize="24"/>
+        </ComboBox>
+
+        <Label x:Name="Error_Label" Content="Enter the player that" HorizontalAlignment="Left" Margin="938,525,-11,0" VerticalAlignment="Top" Width="193" Height="39" FontSize="18.667"/>
+        <Label x:Name="Error_Label_Two" Content="committed the error:" Margin="938,550,-11,148" FontSize="18.667"/>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,79 @@
+V "GNAT Lib v4.8"
+P SS ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK
+
+U flyingbird_package%b	flyingbird_package.adb	4ca91815 NE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U flyingbird_package%s	flyingbird_package.ads	9042b8b3 EE OO PF PK IL
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.ads		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W bird_package%s	bird_package.adb	bird_package.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D bird_package.ads	20160426234548 b167fb80
+D flyingbird_package.ads  20160426234844 21254333
+D flyingbird_package.adb  20160426233209 55e1aef2
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D system.ads		20140416144310 90249111
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20110830140625 eea35a36
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-string.ads		20130104124955 46b01415
+D s-ststop.ads		20090417130712 ee472be4
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 12|8r6 9r5
+X 7 a-textio.ads
+49K13*Text_IO 471e16 12|8w10 9r9
+X 10 bird_package.ads
+8K9*Bird_Package 62e17 11|8w6 8r24
+10R14*Bird_Type 60e19 11|12r37 25r37
+18U19*Init
+25V18*Name{string}
+32V18*Call{string}
+39V18*Type_Name{string}
+X 11 flyingbird_package.ads
+10K9*FlyingBird_Package 30l5 30e23 12|11b14 23l5 23t23
+12R14*FlyingBird_Type<10|10R14> 10|18p19 25p18 32p18 39p18 11|19P18 19r45
+. 25c14 28e19 12|18r45
+19V18*movement{string}<10|53p18> 19>27 12|18b18 21l13 21t21
+19r27 A_FlyingBird{12R14} 12|18b27
+

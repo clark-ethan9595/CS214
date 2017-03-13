@@ -1,0 +1,411 @@
+Script started on Mon 02 May 2016 07:38:54 PM EDT
+elc3@cray:~/Documents/214/code/11/java$ cat Threaded_Array.java
+/*
+ * Threaded_Array.java computes the sum of a set of numbers from a file
+ *
+ * Created by: Dr. Nelesen
+ * Completed by: Ethan Clark Lab11
+ * Date: May 2, 2016
+ */
+
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+
+class Threaded_Array {
+
+    int [] inputs; // instance data for input array
+    int numValues;
+
+    //method to populate array with data from file
+    public void readFile(String fname)
+    {
+	File f = new File(fname);
+	BufferedReader reader = null;
+	int i = 0;
+	
+	try {
+	    reader = new BufferedReader(new FileReader(f));
+	    String text = null;
+	    
+	    // Read in number of values first.
+	    numValues = Integer.parseInt(reader.readLine());
+	    
+	    inputs = new int[numValues];
+	    
+	    // read and throw away blank line
+	    reader.readLine();
+	    
+	    while ((text = reader.readLine()) != null) {
+		// System.out.println("text is " + text + " and i is " + i);
+		inputs[i] = Integer.parseInt(text);
+		i++;
+	    }
+	    reader.close();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    //Worker method that computes the sum
+    public void doSummation(int threadCount){
+	int total = 0;
+	long startTime = System.nanoTime();
+	// Make and start all the workers, keeping them in a list.
+	List<Worker> workers = new ArrayList<Worker>();
+	int lenOneWorker = inputs.length / threadCount;
+	for (int i=0; i<threadCount; i++) {
+	    int start = i * lenOneWorker;
+	    int end = (i+1) * lenOneWorker;
+	    // Special case: make the last worker take up all the excess.
+	    if (i==threadCount-1) end = inputs.length;
+	    Worker worker = new Worker(start, end);
+	    workers.add(worker);
+	    worker.start();
+	}
+	
+	// Wait to finish until all Workers have finished
+	try {
+	    for (Worker w: workers) w.join();
+	} catch (InterruptedException ignored) {
+	}
+	
+	// Gather sums from workers 
+	for (Worker w: workers) total += w.getSum();
+	long endTime = System.nanoTime();
+	System.out.println("Total is: " + total);
+	System.out.println("time: " + (endTime - startTime));
+    }
+
+    // main kicks things off and gets out of the way
+    public static void main (String [] args){
+	if (args.length != 2) {
+	    System.out.println("Usage: java Threaded_Array <filename> \n");
+	    System.exit(-1);
+	}
+	Threaded_Array sum = new Threaded_Array();
+	
+	//read values from file
+	sum.readFile(args[0]);
+	sum.doSummation(Integer.parseInt(args[1]));
+
+    }
+
+    // Worker inner class to add up a section of the array.
+    private class Worker extends Thread {
+	int start;
+	int end;
+	long sum;
+	
+	// Note the start and end indexes for this worker
+	// in the array. Goes up to but not including end index.
+	Worker(int start, int end) {
+	    this.start = start;
+	    this.end = end;
+	    sum = 0;
+	}
+	// Computes the sum for our start..end section
+	// in the array (client should call getSum() later).
+	public void run() {
+	    for (int i=start; i<end; i++) {
+		sum += inputs[i];
+	    }
+	}
+	
+	public long getSum() {
+	    return sum;
+	}
+    }
+}
+elc3@cray:~/Documents/214/code/11/java$ javac Threaded_Array.java
+elc3@cray:~/Documents/214/code/11/java$ java Threaded_Array ../numbers/1000000numbers.txt 1
+Total is: 500869305
+time: 5550470
+elc3@cray:~/Documents/214/code/11/java$ java Threaded_Array ../numbers/1000000numbers.txt 8
+Total is: 500869305
+time: 14469471
+elc3@cray:~/Documents/214/code/11/java$ exit
+
+Script done on Mon 02 May 2016 07:39:50 PM EDT
+Script started on Mon 02 May 2016 08:50:01 PM EDT
+elc3@cray:~/Documents/214/code/11/ada$ cat tasked_array_sum.adb
+-- tasked_array_sum.adb sums the values from an input file using an array using threads
+--
+-- Begun by: Prof. Adams, for CS 214 at Calvin College.
+-- Completed by: Ethan Clark Lab11
+-- Date: May 2, 2016
+--
+-- Usage: tasked_array_sum <inFileName> <numTasks>
+-------------------------------------------------------------------------------------------
+
+with Ada.Text_IO,            -- string output
+     Ada.Integer_Text_IO,    -- integer output
+     Ada.Command_Line,       -- Argument()
+     Ada.Real_Time;          -- Clock, Time, etc.
+
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Real_Time;
+
+procedure tasked_array_sum is
+
+   package Long_IO is new Integer_IO(Long_Integer); use Long_IO;
+
+   type Int_Array is array (Integer range <>) of Long_Integer;
+   type Int_Array_Pointer is access Int_Array;
+
+   Values: Int_Array_Pointer;
+   Total:  Long_Integer;
+   Start_Time, Stop_Time:  Ada.Real_Time.Time;
+   Time_Required: Duration;
+   
+      task type Array_Adder_Task is 
+      entry sum(ID, Slice_Size: in Integer);
+      entry report(Result: out Long_Integer);
+   end;
+
+
+function Sum_Slice(V: in Int_Array_Pointer;
+                        Start, Stop: in Integer) 
+                        return Long_Integer is
+      Partial_Sum: Long_Integer := 0;
+   begin
+         for i in  Start..Stop loop
+            Partial_Sum := Partial_Sum + V(i);
+         end loop;
+         return Partial_Sum;
+   end Sum_Slice;
+
+
+
+
+  task body Array_Adder_Task is
+      My_Total : Long_Integer := 0;
+      My_Start_Index, My_Stop_Index : Integer;
+   begin
+         accept sum(ID, Slice_Size: in Integer) do
+            My_Start_Index := ID * Slice_Size;
+            My_Stop_Index := My_Start_Index + Slice_Size - 1;
+         end; 
+
+         My_Total := Sum_Slice(Values, 
+                                My_Start_Index,
+                                My_Stop_Index);
+
+         accept report(Result: out Long_Integer) do
+            Result := My_Total;
+         end; 
+   end Array_Adder_Task;
+
+   procedure Check_Command_Line is
+   begin
+      if Ada.Command_Line.Argument_Count /= 2 then
+         New_line;
+         Put("Usage: array_sum <inFileName> <numTasks>");
+         New_line; New_line;
+         Ada.Command_Line.Set_Exit_Status(1);
+      end if;
+   end Check_Command_Line;
+
+   procedure Read_File(File_Name: in String; V: in out Int_Array_Pointer) is
+      Size:   Integer;
+      Number_File : File_Type;
+   begin
+     Open(File => Number_File,
+            Mode => In_File,
+            Name => File_Name); 
+      Get(Number_File, Size);
+      V := new Int_Array(0..Size-1);
+      for i in V'Range loop
+         Get(Number_File, V(i));
+      end loop;
+   end Read_File;
+
+    
+
+   procedure Display(result: in Long_Integer; Compute_Time: in Duration) is
+   begin
+      New_line;
+      Put("The sum is ");
+      Put(Total);
+      New_line;
+      Put(" and computing it took "); 
+      Put(Duration'Image (Compute_Time));
+      Put(" secs.");
+      New_line; New_line;
+   end Display;
+
+  function Sum_In_Parallel(Values: in Int_Array_Pointer;
+                            Num_Tasks: in Integer) return Long_Integer is
+      Partial_Result, Result: Long_Integer := 0;
+      Leftovers, Slice_Size, Start, Stop : Integer;
+
+      type Task_Array is array(Integer range <>) of Array_Adder_Task;
+      type Task_Array_Ptr is access Task_Array;
+      Adder_Tasks : Task_Array_Ptr;
+
+   begin
+      Slice_Size := Values'Length / Num_Tasks;
+      Adder_Tasks := new Task_Array(1..Num_Tasks-1);
+
+      for task_ID in 1..NUM_TASKS-1 loop
+         Adder_Tasks(task_ID).sum(task_ID, Slice_Size);
+      end loop;
+
+      Result := Sum_Slice(Values, 0, Slice_Size-1);
+
+      Leftovers := Values'Length REM Num_Tasks;
+
+      if ( Leftovers > 0 ) then
+         Start := Values'Length - Leftovers;
+         Stop := Values'Length - 1;
+         for i in Start..Stop loop
+            Result := Result + Values(i);
+         end loop;
+      end if;
+
+      for task_ID in 1..Num_Tasks-1 loop
+         Adder_Tasks(task_ID).report(Partial_Result);
+         Result := Result + Partial_Result;
+      end loop;
+
+      return Result;
+   end Sum_In_Parallel;
+
+
+
+
+
+begin
+   Check_Command_Line;
+   Read_File( Ada.Command_Line.Argument(1), Values );
+   Start_Time := Clock;
+   Total := Sum_In_Parallel(Values,
+   								integer'Value( Ada.Command_Line.Argument(2)));
+   Stop_Time := Clock;
+   Time_Required := Ada.Real_Time.To_Duration(Stop_Time - Start_Time);
+   Display(Total, Time_Required);
+end tasked_array_sum;
+
+elc3@cray:~/Documents/214/code/11/ada$ gnatmake tasked_array_sum.adb
+gcc-4.8 -c tasked_array_sum.adb
+gnatbind -x tasked_array_sum.ali
+gnatlink tasked_array_sum.ali
+elc3@cray:~/Documents/214/code/11/ada$ ./tasked_array_sum ../numbers/1000000numb ers.txt 1
+
+The sum is            500869305
+ and computing it took  0.003081000 secs.
+
+elc3@cray:~/Documents/214/code/11/ada$ ./tasked_array_sum ../numbers/1000000numbeers.txt 1 4
+
+The sum is            500869305
+ and computing it took  0.001262000 secs.
+
+elc3@cray:~/Documents/214/code/11/ada$ exit
+
+Script done on Mon 02 May 2016 08:50:30 PM EDT
+Script started on Mon 02 May 2016 08:52:27 PM EDT
+elc3@cray:~/Documents/214/code/11/ruby$ cat threaded_array_sum.rb
+# threaded_array_sum.rb sums the values in an array with threading
+#
+# Begun by: Prof. Adams, for CS 214 at Calvin College.
+# Completed by: Ethan Clark
+# Date: May 2, 2016
+#
+# Usage: ruby thread_array_sum.rb <inFileName> <numThreads>
+###############################################################
+
+# make certain the input file was specified on the command-line
+def checkCommandLine
+  if ARGV.length != 2
+     puts "\nUsage: sum <fileName> <numThreads>\n\n"
+     exit(1)
+  end
+end
+
+# return: an array containing the values from the file
+#  whose name was specified on the command-line
+def readFile
+   strArray = IO.readlines( ARGV[0] )
+   intArray = Array.new( Integer(strArray[0]) )
+   for i in 2..strArray.size
+      if  !strArray[i].nil?
+         intArray[i-2] = Integer( strArray[i].chomp )
+      end
+   end
+   intArray 
+end
+
+# Return: the sum of the values 
+def sumSlice(values, id, sliceSize)
+   start = id * sliceSize
+   stop = start + sliceSize - 1
+   myTotal = 0
+   for i in start..stop
+	myTotal += values[i]
+   end
+   myTotal
+end
+
+require 'thread'      # exclusive
+
+   def sumInParallel(values, numThreads)
+      sliceSize = values.size / numThreads
+      threadArray = Array.new( numThreads )
+      result = 0
+
+      for i in 1..numThreads-1
+         threadArray[i] = Thread.new { 
+                             myTotal = sumSlice(values, 
+                                                i,
+                                                sliceSize) 
+                             Thread.exclusive {
+                                result += myTotal
+                             }
+                          }
+      end
+
+      myTotal  = sumSlice(values, 0, sliceSize)
+
+      leftovers = values.size % numThreads
+      if leftovers > 0
+         for i in values.size-leftovers..values.size-1
+            myTotal += values[i]
+         end
+      end
+
+      Thread.exclusive {
+         result += myTotal
+      }
+
+      for i in 1..numThreads-1
+         threadArray[i].join
+      end
+
+      result
+   end
+
+def main
+   checkCommandLine
+   values = readFile
+   startTime = Time.now
+   total = sumInParallel(values, Integer( ARGV[1] ) )
+   endTime = Time.now
+   interval = (endTime - startTime).to_f
+   puts "\nThe sum is #{total}\n"
+   printf(" and computing it took %.9f seconds.\n\n", interval)
+end
+
+main
+
+elc3@cray:~/Documents/214/code/11/ruby$ ruby threaded_array_sum.rb ../numbers/1000000numbers.txt 1
+
+The sum is 500869305
+ and computing it took 0.047713664 seconds.
+
+elc3@cray:~/Documents/214/code/11/ruby$ ruby threaded_array_sum.rb ../numbers/1000000numbers.txt 1 4
+
+The sum is 500892467
+ and computing it took 0.069751058 seconds.
+
+elc3@cray:~/Documents/214/code/11/ruby$ exit
+
+Script done on Mon 02 May 2016 08:52:59 PM EDT

@@ -1,0 +1,159 @@
+-- list_package.adb defines Ada linked list operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Ethan Clark Project9
+-- Date: April 19, 2016
+-------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use Ada.Text_IO, Ada.Integer_Text_IO;
+
+package body List_Package is
+
+  -----------------------------------------------------
+  -- Initialize a list                                -
+  -- Receive: aList, a List.                          -
+  -- Pre: aList is uninitialized.                     -
+  -- Post: aList%itsFirst == aList%itsLast == NULL && -
+  --        aList%itsLength == 0.                     -
+  -----------------------------------------------------
+  procedure Init(A_List : out List) is
+  begin
+    A_List.Its_First := null;
+    A_List.Its_Last := null;
+    A_List.Its_Length := 0;
+  end Init;
+
+  ------------------------------------------------
+  -- Is a list empty?                            -
+  -- Receive: aList, a List.                     -
+  -- Return: true, iff aList contains no values. -
+  ------------------------------------------------
+  function Empty(A_List : in List) return Boolean is
+  begin
+    return A_List.Its_Length = 0;
+  end Empty;
+
+  -------------------------------------
+  -- How many values are in a list?   -
+  -- Receive: aList, a List.          -
+  -- Return: aList%itsLength.         -
+  -------------------------------------
+  function Length(A_List : in List) return Integer is
+  begin
+    return A_List.Its_Length;
+  end Length;
+
+  ----------------------------------------
+  -- Append a value to a list.           -
+  -- Receive: aValue, an integer,        -
+  -- Passback: aList, containing aValue. -
+  ----------------------------------------
+  procedure Append(A_Value : in Integer; A_List : in out List) is
+    Temp_Ptr : constant Node_Ptr := new List_Node;
+  begin
+    Temp_Ptr.Its_Value := A_Value;
+    Temp_Ptr.Its_Next := null;
+
+    if A_List.Its_Length = 0 then
+       A_List.Its_First := Temp_Ptr;
+    else
+       A_List.Its_Last.Its_Next := Temp_Ptr;
+    end if;
+
+    A_List.Its_Last := Temp_Ptr;
+
+    A_List.Its_Length := A_List.Its_Length + 1;
+  end Append;
+
+  -------------------------------------
+  -- Display the values in a list.    -
+  -- Receive: aList, a List.          -
+  -- Output: the values in aList.     -
+  -------------------------------------
+
+  procedure Put(A_List: in List) is
+
+  -- Declare Temp_Ptr before the procedure begins
+  Temp_Ptr: Node_Ptr := A_List.Its_First;
+
+  begin
+
+	-- While Temp_Ptr is not null (has not reached end of A_List)
+	while Temp_Ptr /= null loop
+
+		-- Output the Value of the Temp_Ptr
+		Put(' '); Put(Temp_Ptr.Its_Value);
+
+		-- Update to the next Ptr/element in A_List
+		Temp_Ptr := Temp_Ptr.Its_Next;
+
+	end loop;
+
+  end Put;
+
+  ---------------------------------------
+  -- Find the maximum value in a list.  -
+  -- Receive: aList, a List.            -
+  -- PRE: aList is not empty            -
+  -- Return: the maximum value in aList.-
+  ---------------------------------------
+
+  function Max(A_List: in List) return Integer is
+
+  -- Declare Temp_Ptr, Max_Int before the function begins
+  Temp_Ptr: Node_Ptr := A_List.Its_First;
+  Max_Int: Integer := -99999999;
+
+  begin
+
+	-- While Temp_Ptr is not null (has not reached end of A_List)
+	while Temp_Ptr /= null loop
+
+		-- If the Temp_Ptr Value is bigger than our current Max_Int value
+		if Temp_Ptr.Its_Value > Max_Int then
+
+			-- Make the Temp_Ptr value the new Max_Int
+			Max_Int := Temp_Ptr.Its_Value;
+
+		end if;
+
+		-- Updated to the next Ptr/element in the List
+		Temp_Ptr := Temp_Ptr.Its_Next;
+
+	end loop;
+
+	-- Return the Max_Int
+	return Max_Int;
+
+  end Max;
+
+  ------------------------------------------------------------------------------------
+  -- Search(aList, element) searches for element in aList and returns its position  --
+  -- Receive: aList, a List; element, an integer                                    --
+  -- PRE: aList has already been defined                                            --
+  -- Return: integer index/position of element in aList; -1 if not in aList         --
+  ------------------------------------------------------------------------------------
+
+  function Search(aList: in List; element: in Integer) return Integer is
+
+  Temp_Ptr: Node_Ptr := aList.Its_First;
+  index: Integer := 0;
+
+  begin
+
+	while Temp_Ptr /= null loop
+		
+		if Temp_Ptr.Its_Value = element then
+			return index;
+		else
+			index := index + 1;
+			Temp_Ptr := Temp_Ptr.Its_Next;
+		end if;
+	end loop;
+
+	return -1;
+  end Search;
+
+end List_Package;
+
